@@ -1,0 +1,36 @@
+.header {
+  width: 100%;
+  box-shadow: 0 2px 5px var(--ligth-gray);
+}
+
+.header__content {
+  max-width: 1024px;
+  margin: 0 auto;
+  padding: 15px 10px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.header__icons {
+  display: flex;
+  gap: 15px;
+}
+
+.header__user-icon,
+.header__cart-icon {
+  max-height: 25px;
+  filter: drop-shadow(0 0 5px var(--ligth-gray));
+  transition: all 0.4s ease;
+}
+
+.header__user-icon:hover,
+.header__cart-icon:hover {
+  cursor: pointer;
+  max-height: 24px;
+}
+
+.header__logo {
+  max-height: 50px;
+  filter: drop-shadow(0 0 5px var(--ligth-gray));
+}
