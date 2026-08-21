@@ -5,6 +5,7 @@ import { ProductsContext } from "../contexts/ProductsContext";
 import ProductSection from "./ProductSection/ProductSection";
 import { useState } from "react";
 import Popup from "./Popup/Popup";
+import Footer from "./Footer/Footer";
 
 const groups = [
   { name: "Ensaladas", _id: "65f1a2b3c4d5e6f7a8b9c011" },
@@ -15,7 +16,7 @@ const groups = [
 
 const products = [
   {
-    name: "Ensalada pollo manzana",
+    name: "E. Pollo Manzana",
     description:
       "Cama de lechuga, vinagreta de balsámico, mezcla de pollo con manzana y chile jalapeño, uvas, queso feta y almendras tostadas.",
     image: "../images/pollo-manzana.jpg",
@@ -24,7 +25,7 @@ const products = [
     _id: "650f1f1e1c4d7b001c8e9f1a",
   },
   {
-    name: "Ensalada mexicana",
+    name: "E. Mexicana",
     description:
       "Cama de lechuga, aderezo de cilantro, arrachera, tomate, granos de elote amarillo, frijol negro, aguacate, queso fresco y tiritas de tortilla.",
     image: "../images/pollo-manzana.jpg",
@@ -33,7 +34,7 @@ const products = [
     _id: "650f1f1e1c4d7b001c8e9f1b",
   },
   {
-    name: "Ensalada pasta al pesto",
+    name: "E. Pasta al Pesto",
     description:
       "Cama de pasta fusilli, aderezo pesto, pechuga de pollo a la plancha, tomate, pimiento amarillo, aceitunas negras y queso parmesano (no contiene lechuga y se sirve fría).",
     image: "../images/pollo-manzana.jpg",
@@ -42,7 +43,7 @@ const products = [
     _id: "64f0b2a1e4b01a2c3d4e5f6a",
   },
   {
-    name: "Ensalada griega",
+    name: "E. Griega",
     description:
       "Cama de lechuga, vinagreta de balsámico, pechuga de pollo a la plancha, tomate, aceitunas negras, pepino, pimento amarillo y queso feta.",
     image: "../images/pollo-manzana.jpg",
@@ -51,7 +52,7 @@ const products = [
     _id: "64f0b2a1e4b01a2c3d4e5f6b",
   },
   {
-    name: "Ensalada oriental",
+    name: "E. Oriental",
     description:
       "Cama de lechuga, aderezo oriental, pechuga de pollo a la plancha, zanahoria, repollo morado y crujientes de won ton",
     image: "../images/pollo-manzana.jpg",
@@ -60,7 +61,7 @@ const products = [
     _id: "64f0b2a1e4b01a2c3d4e5f6c",
   },
   {
-    name: "Baguette de pollo con chipotle",
+    name: "B. Pollo con Chipotle",
     description:
       "Pechuga de pollo a la plancha con crema de chipotle, mayonesa, queso monterrey, tomate, lechuga y aguacate.",
     image: "../images/pollo-chipotle.jpg",
@@ -69,7 +70,7 @@ const products = [
     _id: "650f1f1e1c4d7b001c8e9f1c",
   },
   {
-    name: "Baguette de pollo poblano",
+    name: "B. Pollo Poblano",
     description:
       "Pechuga de pollo a la plancha con crema de chile poblano, mayonesa, queso monterrey y granos de elote amarillo.",
     image: "../images/pollo-chipotle.jpg",
@@ -78,7 +79,7 @@ const products = [
     _id: "650f1f1e1c4d7b001c8e9f1d",
   },
   {
-    name: "Sopa de tortilla",
+    name: "S. de Tortilla",
     description:
       "Base de tomate, queso fresco, aguacate, tiritas de tortilla y crema ácida.",
     image: "../images/sopa-tortilla.jpg",
@@ -87,7 +88,7 @@ const products = [
     _id: "507f1f77bcf86cd799439011",
   },
   {
-    name: "Caldo de res con arroz",
+    name: "Caldo de Res",
     description: "Pecho de res, elote, chile poblano, zanahoria, papa y arroz.",
     image: "../images/sopa-tortilla.jpg",
     price: 61,
@@ -134,6 +135,7 @@ function App() {
         <Header />
         <Navigation />
         <ProductSection />
+        <Footer />
         {popup && <Popup onClose={handleClosePopup}>{popup.children}</Popup>}
       </ProductsContext.Provider>
     </>

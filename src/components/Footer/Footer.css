@@ -1,0 +1,12 @@
+.footer {
+  width: 100%;
+  margin-top: 30px;
+  box-shadow: 0 -2px 2px var(--ligth-gray);
+}
+
+.footer__content {
+  background-color: var(--soft-white);
+  min-height: 125px;
+  max-width: 1024px;
+  margin: 0 auto;
+}

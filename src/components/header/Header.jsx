@@ -7,9 +7,15 @@ import { useContext } from "react";
 import { ProductsContext } from "../../contexts/ProductsContext";
 
 function Header() {
-  const { handleOpenPopup } = useContext(ProductsContext);
+  const { handleOpenPopup, cartItems } = useContext(ProductsContext);
 
   const cartPopup = { children: <CartPopup /> };
+
+  let itemsQuantity = 0;
+
+  cartItems.forEach((item) => (itemsQuantity += item.quantity));
+
+  console.log(itemsQuantity);
 
   return (
     <>
@@ -35,6 +41,9 @@ function Header() {
                 alt="cart icon"
                 className="header__cart-icon"
               />
+              {itemsQuantity > 0 && (
+                <div className="header__button-info">{itemsQuantity}</div>
+              )}
             </button>
           </div>
         </div>

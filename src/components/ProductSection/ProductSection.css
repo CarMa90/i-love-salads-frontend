@@ -1,8 +1,10 @@
 .product-section {
+  position: relative;
+  background-color: var(--white);
   width: 100%;
   max-width: 1024px;
   margin: 0 auto;
-  padding: 28px;
+  padding: 0 10px;
 }
 
 .product-section__content {
@@ -13,5 +15,11 @@
 }
 
 .product-section__title {
+  position: sticky;
+  top: 50px;
+  z-index: 900;
+  background-color: var(--white);
   color: var(--gray);
+  margin: 0 0 50px 0;
+  padding: 18px 10px 0 10px;
 }
