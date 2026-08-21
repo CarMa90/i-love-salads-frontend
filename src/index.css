@@ -14,4 +14,13 @@
   --soft-white: rgb(247, 248, 245);
 
   box-sizing: border-box;
+  font-family: sans-serif, Arial, Helvetica;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
 }

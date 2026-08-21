@@ -1,9 +1,28 @@
 .header {
+  background-color: var(--white);
   width: 100%;
-  box-shadow: 0 2px 5px var(--ligth-gray);
+}
+
+.header__button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 5px;
+  border-radius: 50%;
+  background-color: transparent;
+  border: medium solid var(--primary-green);
+  transition: all 0.4s ease;
+  cursor: pointer;
+}
+
+.header__button:hover {
+  background-color: var(--dark-green);
+  border: medium solid var(--dark-green);
 }
 
 .header__content {
+  background-color: var(--soft-white);
   max-width: 1024px;
   margin: 0 auto;
   padding: 15px 10px;
@@ -24,10 +43,9 @@
   transition: all 0.4s ease;
 }
 
-.header__user-icon:hover,
-.header__cart-icon:hover {
-  cursor: pointer;
-  max-height: 24px;
+.header__button:hover .header__user-icon,
+.header__button:hover .header__cart-icon {
+  filter: brightness(0) invert(1);
 }
 
 .header__logo {

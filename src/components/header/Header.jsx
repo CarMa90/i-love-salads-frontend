@@ -10,12 +10,20 @@ function Header() {
         <div className="header__content">
           <img className="header__logo" src={logo} alt="logo i love salads" />
           <div className="header__icons">
-            <img
-              src={profileIcon}
-              alt="user icon"
-              className="header__user-icon"
-            />
-            <img src={cartIcon} alt="cart icon" className="header__cart-icon" />
+            <button className="header__button">
+              <img
+                src={profileIcon}
+                alt="user icon"
+                className="header__user-icon"
+              />
+            </button>
+            <button className="header__button">
+              <img
+                src={cartIcon}
+                alt="cart icon"
+                className="header__cart-icon"
+              />
+            </button>
           </div>
         </div>
       </header>

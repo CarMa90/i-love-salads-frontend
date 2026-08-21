@@ -1,0 +1,38 @@
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: var(--white);
+  box-shadow: 0 2px 2px var(--ligth-gray);
+}
+
+.nav__list {
+  background-color: var(--soft-white);
+  display: flex;
+  justify-content: flex-start;
+  gap: 20px;
+  list-style: none;
+  padding: 15px 10px;
+  width: 100%;
+  max-width: 1024px;
+  margin: 0 auto;
+  overflow-x: auto;
+}
+
+.nav__link {
+  color: var(--gray);
+  text-decoration: none;
+  padding: 15px;
+  border-radius: 25px;
+}
+
+.nav__link:hover {
+  color: var(--white);
+  background-color: var(--primary-green);
+}
+
+@media screen and (min-width: 600px) {
+  .nav__list {
+    justify-content: center;
+  }
+}
