@@ -38,7 +38,7 @@
 
 .header__user-icon,
 .header__cart-icon {
-  max-height: 25px;
+  max-height: 20px;
   filter: drop-shadow(0 0 5px var(--ligth-gray));
   transition: all 0.4s ease;
 }
@@ -51,4 +51,11 @@
 .header__logo {
   max-height: 50px;
   filter: drop-shadow(0 0 5px var(--ligth-gray));
+}
+
+@media screen and (min-width: 544px) {
+  .header__user-icon,
+  .header__cart-icon {
+    max-height: 25px;
+  }
 }

@@ -124,9 +124,13 @@ function App() {
     setPopup(null);
   }
 
+  const [cartItems, setCartItems] = useState([]);
+
   return (
     <>
-      <ProductsContext.Provider value={{ groups, products, handleOpenPopup }}>
+      <ProductsContext.Provider
+        value={{ groups, products, handleOpenPopup, setCartItems, cartItems }}
+      >
         <Header />
         <Navigation />
         <ProductSection />
