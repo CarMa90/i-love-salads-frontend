@@ -1,9 +1,16 @@
 import logo from "../../assets/logo.svg";
 import profileIcon from "../../assets/user-icon.svg";
 import cartIcon from "../../assets/shopping-cart.svg";
+import CartPopup from "../Popup/CartPopup/CartPopup";
 import "./Header.css";
+import { useContext } from "react";
+import { ProductsContext } from "../../contexts/ProductsContext";
 
 function Header() {
+  const { handleOpenPopup } = useContext(ProductsContext);
+
+  const cartPopup = { children: <CartPopup /> };
+
   return (
     <>
       <header className="header">
@@ -17,7 +24,12 @@ function Header() {
                 className="header__user-icon"
               />
             </button>
-            <button className="header__button">
+            <button
+              onClick={() => {
+                handleOpenPopup(cartPopup);
+              }}
+              className="header__button"
+            >
               <img
                 src={cartIcon}
                 alt="cart icon"

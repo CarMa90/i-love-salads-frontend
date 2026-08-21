@@ -2,7 +2,6 @@ import "./Card.css";
 import cartIcon from "../../../assets/shopping-cart.svg";
 
 function Card({ product }) {
-  console.log(product.image);
   return (
     <>
       <div className="card">

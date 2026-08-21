@@ -3,6 +3,8 @@ import Header from "./header/Header";
 import Navigation from "./Navigation/Navigation";
 import { ProductsContext } from "../contexts/ProductsContext";
 import ProductSection from "./ProductSection/ProductSection";
+import { useState } from "react";
+import Popup from "./Popup/Popup";
 
 const groups = [
   { name: "Ensaladas", _id: "65f1a2b3c4d5e6f7a8b9c011" },
@@ -112,12 +114,23 @@ const products = [
 ];
 
 function App() {
+  const [popup, setPopup] = useState(null);
+
+  function handleOpenPopup(popup) {
+    setPopup(popup);
+  }
+
+  function handleClosePopup() {
+    setPopup(null);
+  }
+
   return (
     <>
-      <ProductsContext.Provider value={{ groups, products }}>
+      <ProductsContext.Provider value={{ groups, products, handleOpenPopup }}>
         <Header />
         <Navigation />
         <ProductSection />
+        {popup && <Popup onClose={handleClosePopup}>{popup.children}</Popup>}
       </ProductsContext.Provider>
     </>
   );

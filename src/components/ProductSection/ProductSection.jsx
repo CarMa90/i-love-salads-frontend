@@ -5,7 +5,6 @@ import Card from "./Card/Card";
 
 function ProductSection() {
   const { groups, products } = useContext(ProductsContext);
-  console.log(groups, products);
 
   return (
     <>
