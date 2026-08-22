@@ -9,12 +9,14 @@ function CartPopup() {
     setCartItems((prevItems) => {
       return prevItems
         .map((cartItem) =>
-          cartItem._id === item._id
-            ? { ...cartItem, quantity: cartItem.quantity - 1 }
-            : cartItem,
+          cartItem._id === item._id ? { ...cartItem, quantity: 0 } : cartItem,
         )
         .filter((cartItem) => cartItem.quantity > 0);
     });
+  }
+
+  function handleRemoveAll() {
+    setCartItems([]);
   }
 
   return (
@@ -40,7 +42,12 @@ function CartPopup() {
         </ul>
       </div>
       <div className="popup__cart-buttons">
-        <button className="popup__cart-button popup__cart-delete-btn">
+        <button
+          className="popup__cart-button popup__cart-delete-btn"
+          onClick={() => {
+            handleRemoveAll();
+          }}
+        >
           Borrar todo
         </button>
         <button className="popup__cart-button">Ordenar</button>

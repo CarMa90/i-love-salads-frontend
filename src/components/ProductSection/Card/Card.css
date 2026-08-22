@@ -6,10 +6,15 @@
   background-color: var(--white);
 }
 
+.card:hover {
+  box-shadow: 0 0 3px var(--gray);
+}
+
 .card__cart-button {
+  width: 92.8px;
   color: var(--white);
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   text-align: center;
   padding: 10px;
@@ -25,12 +30,8 @@
   border: thin solid var(--dark-green);
 }
 
-.card__cart-svg {
-  max-height: 20px;
-}
-
-.card__cart-button:hover .card__cart-svg {
-  filter: brightness(0) invert(1);
+.card__cart-button > div {
+  padding: 0 5px;
 }
 
 .card__description {
@@ -51,7 +52,7 @@
   border-radius: 20px 20px 0 0;
 }
 
-.card div {
+.card > div {
   padding: 10px;
   display: flex;
   justify-content: space-between;

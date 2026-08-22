@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { ProductsContext } from "../../../contexts/ProductsContext";
 
 function Card({ product }) {
-  const { setCartItems } = useContext(ProductsContext);
+  const { setCartItems, cartItems } = useContext(ProductsContext);
 
   function handleAddItemToCart(item) {
     setCartItems((prevItems) => {
@@ -26,6 +26,53 @@ function Card({ product }) {
     });
   }
 
+  function handleRemoveItem(item) {
+    setCartItems((prevItems) => {
+      return prevItems
+        .map((cartItem) =>
+          cartItem._id === item._id
+            ? { ...cartItem, quantity: cartItem.quantity - 1 }
+            : cartItem,
+        )
+        .filter((cartItem) => cartItem.quantity > 0);
+    });
+  }
+
+  const resultado = cartItems.find((item) => item._id === product._id);
+
+  const renderizar = resultado ? (
+    <>
+      <button className="card__cart-button">
+        <div
+          className="card__minus-btn"
+          onClick={() => {
+            handleRemoveItem(product);
+          }}
+        >
+          -
+        </div>
+        <div>{resultado.quantity}</div>
+        <div
+          className="card__plus-btn"
+          onClick={() => {
+            handleAddItemToCart(product);
+          }}
+        >
+          +
+        </div>
+      </button>
+    </>
+  ) : (
+    <button
+      className="card__cart-button"
+      onClick={() => {
+        handleAddItemToCart(product);
+      }}
+    >
+      Agregar +
+    </button>
+  );
+
   return (
     <>
       <div className="card">
@@ -34,14 +81,7 @@ function Card({ product }) {
         <p className="card__description">{product.description}</p>
         <div>
           <p className="card__price">${product.price}mxn</p>
-          <button
-            className="card__cart-button"
-            onClick={() => {
-              handleAddItemToCart(product);
-            }}
-          >
-            + Agregar
-          </button>
+          {renderizar}
         </div>
       </div>
     </>
