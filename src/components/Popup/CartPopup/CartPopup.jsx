@@ -1,9 +1,11 @@
 import { useContext } from "react";
 import { ProductsContext } from "../../../contexts/ProductsContext";
+import { UserContext } from "../../../contexts/UserContext";
 import trashCan from "../../../assets/delete-icon.svg";
 
 function CartPopup() {
-  const { cartItems, setCartItems } = useContext(ProductsContext);
+  const { cartItems, setCartItems, setOrders } = useContext(ProductsContext);
+  const { currentUser } = useContext(UserContext);
 
   function handleRemoveItem(item) {
     setCartItems((prevItems) => {
@@ -16,6 +18,22 @@ function CartPopup() {
   }
 
   function handleRemoveAll() {
+    setCartItems([]);
+  }
+
+  function handleOrder(items) {
+    setOrders((prevOrders) => {
+      return [
+        ...prevOrders,
+        {
+          products: items,
+          client: currentUser.name,
+          clientId: currentUser._id,
+          id: Date.now().toString(),
+          status: "Enviado",
+        },
+      ];
+    });
     setCartItems([]);
   }
 
@@ -50,7 +68,14 @@ function CartPopup() {
         >
           Borrar todo
         </button>
-        <button className="popup__cart-button">Ordenar</button>
+        <button
+          className="popup__cart-button"
+          onClick={() => {
+            handleOrder(cartItems);
+          }}
+        >
+          Ordenar
+        </button>
       </div>
     </>
   );

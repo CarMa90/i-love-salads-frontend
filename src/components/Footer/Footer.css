@@ -56,5 +56,6 @@
 
   .footer__info {
     display: flex;
+    gap: 5px;
   }
 }

@@ -2,6 +2,7 @@ import "./App.css";
 import Header from "./header/Header";
 import Navigation from "./Navigation/Navigation";
 import { ProductsContext } from "../contexts/ProductsContext";
+import { UserContext } from "../contexts/UserContext";
 import ProductSection from "./ProductSection/ProductSection";
 import { useState } from "react";
 import Popup from "./Popup/Popup";
@@ -126,19 +127,35 @@ function App() {
   }
 
   const [cartItems, setCartItems] = useState([]);
+  const [orders, setOrders] = useState([]);
+  const [currentUser, setCurrentUser] = useState({
+    _id: "64a2b9f1e4b0c8a1b2c3d4e5",
+    name: "Carlos",
+    email: "ejemplo@email.com",
+  });
 
   return (
     <>
-      <ProductsContext.Provider
-        value={{ groups, products, handleOpenPopup, setCartItems, cartItems }}
-      >
-        <Header>
-          <Navigation />
-        </Header>
-        <ProductSection />
-        <Footer />
-        {popup && <Popup onClose={handleClosePopup}>{popup.children}</Popup>}
-      </ProductsContext.Provider>
+      <UserContext.Provider value={{ currentUser, setCurrentUser }}>
+        <ProductsContext.Provider
+          value={{
+            groups,
+            products,
+            handleOpenPopup,
+            setCartItems,
+            cartItems,
+            orders,
+            setOrders,
+          }}
+        >
+          <Header>
+            <Navigation />
+          </Header>
+          <ProductSection />
+          <Footer />
+          {popup && <Popup onClose={handleClosePopup}>{popup.children}</Popup>}
+        </ProductsContext.Provider>
+      </UserContext.Provider>
     </>
   );
 }
