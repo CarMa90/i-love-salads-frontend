@@ -2,6 +2,14 @@
 @import url("./vendor/fonts.css");
 
 :root {
+  --step--2: clamp(0.6076rem, 0.5944rem + 0.0588vw, 0.64rem);
+  --step--1: clamp(0.7292rem, 0.7002rem + 0.1288vw, 0.8rem);
+  --step-0: clamp(0.875rem, 0.8239rem + 0.2273vw, 1rem);
+  --step-1: clamp(1.05rem, 0.9682rem + 0.3636vw, 1.25rem);
+  --step-2: clamp(1.26rem, 1.1363rem + 0.55vw, 1.5625rem);
+  --step-3: clamp(1.512rem, 1.3315rem + 0.802vw, 1.9531rem);
+  --step-4: clamp(1.8144rem, 1.5579rem + 1.14vw, 2.4414rem);
+  --step-5: clamp(2.1773rem, 1.8195rem + 1.59vw, 3.0518rem);
   --primary-green: rgb(90, 135, 43);
   --dark-green: rgb(65, 107, 32);
   --ligth-green: rgb(160, 185, 131);

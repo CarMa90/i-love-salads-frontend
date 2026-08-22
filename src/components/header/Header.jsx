@@ -6,7 +6,7 @@ import "./Header.css";
 import { useContext } from "react";
 import { ProductsContext } from "../../contexts/ProductsContext";
 
-function Header() {
+function Header({ children }) {
   const { handleOpenPopup, cartItems } = useContext(ProductsContext);
 
   const cartPopup = { children: <CartPopup /> };
@@ -34,7 +34,7 @@ function Header() {
               onClick={() => {
                 handleOpenPopup(cartPopup);
               }}
-              className="header__button"
+              className="header__button header__cart-button"
             >
               <img
                 src={cartIcon}
@@ -47,6 +47,7 @@ function Header() {
             </button>
           </div>
         </div>
+        {children}
       </header>
     </>
   );

@@ -132,8 +132,9 @@ function App() {
       <ProductsContext.Provider
         value={{ groups, products, handleOpenPopup, setCartItems, cartItems }}
       >
-        <Header />
-        <Navigation />
+        <Header>
+          <Navigation />
+        </Header>
         <ProductSection />
         <Footer />
         {popup && <Popup onClose={handleClosePopup}>{popup.children}</Popup>}

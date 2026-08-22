@@ -1,5 +1,4 @@
 import "./Card.css";
-import cartIcon from "../../../assets/shopping-cart.svg";
 import { useContext } from "react";
 import { ProductsContext } from "../../../contexts/ProductsContext";
 
@@ -41,11 +40,7 @@ function Card({ product }) {
               handleAddItemToCart(product);
             }}
           >
-            <img
-              className="card__cart-svg"
-              src={cartIcon}
-              alt="Añade al carrito"
-            />
+            + Agregar
           </button>
         </div>
       </div>

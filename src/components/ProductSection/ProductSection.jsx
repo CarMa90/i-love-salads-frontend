@@ -15,17 +15,19 @@ function ProductSection() {
             id={item.name.toLowerCase()}
             className="product-section"
           >
-            <h2 className="product-section__title">
-              {item.name.toUpperCase()}
-            </h2>
             <div className="product-section__content">
-              {products.map((product) => {
-                return (
-                  product.type === item.name && (
-                    <Card key={product._id} product={product} />
-                  )
-                );
-              })}
+              <h2 className="product-section__title">
+                {item.name.toUpperCase()}
+              </h2>
+              <div className="product-section__grid">
+                {products.map((product) => {
+                  return (
+                    product.type === item.name && (
+                      <Card key={product._id} product={product} />
+                    )
+                  );
+                })}
+              </div>
             </div>
           </section>
         );

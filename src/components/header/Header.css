@@ -1,5 +1,8 @@
 .header {
-  background-color: var(--white);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: var(--soft-white);
   width: 100%;
 }
 
@@ -12,20 +15,25 @@
   padding: 5px;
   border-radius: 50%;
   background-color: transparent;
-  border: medium solid var(--primary-green);
+  border: thin solid var(--primary-green);
   transition: all 0.4s ease;
   cursor: pointer;
 }
 
+.header__cart-button {
+  background-color: var(--primary-green);
+}
+
 .header__button:hover {
   background-color: var(--dark-green);
-  border: medium solid var(--dark-green);
+  border: thin solid var(--dark-green);
 }
 
 .header__button-info {
+  font-size: 14px;
   color: var(--white);
-  width: 25px;
-  height: 25px;
+  width: 20px;
+  height: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -37,12 +45,11 @@
 }
 
 .header__content {
-  background-color: var(--soft-white);
   max-width: 1024px;
   margin: 0 auto;
-  padding: 15px 10px;
+  padding: 10px 20px 10px 10px;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
 }
 
@@ -51,26 +58,28 @@
   gap: 15px;
 }
 
+.header__cart-icon {
+  filter: brightness(0) invert(1);
+}
+
 .header__user-icon,
 .header__cart-icon {
   max-height: 20px;
-  filter: drop-shadow(0 0 5px var(--ligth-gray));
   transition: all 0.4s ease;
 }
 
-.header__button:hover .header__user-icon,
-.header__button:hover .header__cart-icon {
+.header__button:hover .header__user-icon {
   filter: brightness(0) invert(1);
 }
 
 .header__logo {
-  max-height: 50px;
-  filter: drop-shadow(0 0 5px var(--ligth-gray));
+  max-height: 40px;
+  filter: drop-shadow(0 0 3px 2px var(--ligth-gray));
 }
 
 @media screen and (min-width: 544px) {
   .header__user-icon,
   .header__cart-icon {
-    max-height: 25px;
+    max-height: 20px;
   }
 }

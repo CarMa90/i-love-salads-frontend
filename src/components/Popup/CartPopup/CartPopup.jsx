@@ -39,6 +39,12 @@ function CartPopup() {
           })}
         </ul>
       </div>
+      <div className="popup__cart-buttons">
+        <button className="popup__cart-button popup__cart-delete-btn">
+          Borrar todo
+        </button>
+        <button className="popup__cart-button">Ordenar</button>
+      </div>
     </>
   );
 }

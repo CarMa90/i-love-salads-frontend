@@ -1,13 +1,17 @@
 .product-section {
+  background-color: var(--soft-white);
+  scroll-margin-top: 96px;
   position: relative;
-  background-color: var(--white);
   width: 100%;
-  max-width: 1024px;
-  margin: 0 auto;
-  padding: 0 10px;
+  padding: 0 10px 20px 10px;
 }
 
 .product-section__content {
+  margin: 0 auto;
+  max-width: 1024px;
+}
+
+.product-section__grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 15px;
@@ -16,10 +20,11 @@
 
 .product-section__title {
   position: sticky;
-  top: 50px;
+  top: 96px;
   z-index: 900;
-  background-color: var(--white);
+  background-color: var(--soft-white);
   color: var(--gray);
-  margin: 0 0 50px 0;
-  padding: 18px 10px 0 10px;
+  padding-top: 20px;
+  margin-top: 0;
+  margin-bottom: 20px;
 }
