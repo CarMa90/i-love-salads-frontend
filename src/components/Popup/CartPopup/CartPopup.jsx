@@ -3,14 +3,17 @@ import { ProductsContext } from "../../../contexts/ProductsContext";
 import { UserContext } from "../../../contexts/UserContext";
 import trashCan from "../../../assets/delete-icon.svg";
 import UserInfoPopup from "../UserInfoPopup/UserInfoPopup";
+import { api } from "../../../utils/api";
 
 function CartPopup() {
   const {
     cartItems,
     setCartItems,
+    orders,
     setOrders,
     handleOpenPopup,
     handleClosePopup,
+    getOrders,
   } = useContext(ProductsContext);
   const { currentUser } = useContext(UserContext);
   const userInfoPopup = { children: <UserInfoPopup /> };
@@ -32,23 +35,24 @@ function CartPopup() {
   function handleOrder(items) {
     const timestamp = Date.now();
 
-    setOrders((prevOrders) => {
-      return [
-        ...prevOrders,
-        {
+    (async () => {
+      api
+        .getNewOrder({
           products: items,
           client: currentUser.name,
           clientId: currentUser._id,
-          _id: timestamp.toString(),
           date: new Date(timestamp).toLocaleDateString("es-MX"),
           time: new Date(timestamp).toLocaleTimeString("es-MX"),
           status: "Enviado",
-        },
-      ];
-    });
-    setCartItems([]);
-    handleClosePopup();
-    handleOpenPopup(userInfoPopup);
+        })
+        .then((newOrder) => {
+          setOrders([newOrder, ...orders]);
+          setCartItems([]);
+          getOrders();
+          handleClosePopup();
+          handleOpenPopup(userInfoPopup);
+        });
+    })();
   }
 
   return (

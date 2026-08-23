@@ -4,11 +4,12 @@ import Navigation from "./Navigation/Navigation";
 import { ProductsContext } from "../contexts/ProductsContext";
 import { UserContext } from "../contexts/UserContext";
 import ProductSection from "./ProductSection/ProductSection";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Popup from "./Popup/Popup";
 import Footer from "./Footer/Footer";
 import OrdersTable from "./OrdersTable/OrdersTable";
+import { api } from "../utils/api";
 
 const groups = [
   { name: "Ensaladas", _id: "65f1a2b3c4d5e6f7a8b9c011" },
@@ -128,13 +129,32 @@ function App() {
     setPopup(null);
   }
 
-  const [cartItems, setCartItems] = useState([]);
   const [orders, setOrders] = useState([]);
+
+  const getOrders = async () => {
+    await api.getOrders().then((data) => {
+      setOrders(data.slice().reverse());
+    });
+  };
+
+  const [cartItems, setCartItems] = useState([]);
   const [currentUser, setCurrentUser] = useState({
     _id: "64a2b9f1e4b0c8a1b2c3d4e5",
     name: "Carlos",
     email: "ejemplo@email.com",
   });
+
+  useEffect(() => {
+    getOrders();
+
+    /* 
+    const interval = setInterval(() => {
+      getOrders();
+    }, 5000);
+
+    return () => clearInterval(interval);
+    */
+  }, []);
 
   return (
     <>
@@ -149,6 +169,7 @@ function App() {
             cartItems,
             orders,
             setOrders,
+            getOrders,
           }}
         >
           <div className="page__content">
