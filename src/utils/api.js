@@ -35,6 +35,20 @@ class Api {
       return Promise.reject(`Error: ${res.status}`);
     });
   }
+
+  changeOrderStatus(data) {
+    return fetch(`${this.url}orders/${data._id}`, {
+      headers: this.headers,
+      body: JSON.stringify(data),
+      method: "PUT",
+    }).then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+
+      return Promise.reject(`Error: ${res.status}`);
+    });
+  }
 }
 
 export const api = new Api({

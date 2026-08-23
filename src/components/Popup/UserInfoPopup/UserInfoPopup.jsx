@@ -22,7 +22,7 @@ function UserInfoPopup() {
             return (
               order.status !== "Entregado" && (
                 <li key={order._id} className="popup__user-item">
-                  Pedido: {order._id.slice(-4)}{" "}
+                  Pedido: {order._id}{" "}
                   {order.status === "Enviado" ? (
                     <span className="popup__user-enviado">Enviado</span>
                   ) : order.status === "Aceptado" ? (

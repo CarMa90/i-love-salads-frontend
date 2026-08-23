@@ -1,9 +1,23 @@
 import "./OrdersTable.css";
 import { useContext } from "react";
 import { ProductsContext } from "../../contexts/ProductsContext";
+import { api } from "../../utils/api";
 
 function OrdersTable() {
   const { orders } = useContext(ProductsContext);
+
+  function handleOrderStatusChange(order) {
+    const newStatus =
+      order.status === "Enviado"
+        ? "Aceptado"
+        : order.status === "Aceptado"
+          ? "Listo"
+          : "Entregado";
+
+    api
+      .changeOrderStatus({ _id: order._id, status: newStatus })
+      .then((res) => console.log(res));
+  }
 
   return (
     <div className="orders-table">
@@ -21,7 +35,20 @@ function OrdersTable() {
           <tbody className="orders-table__body">
             {orders.map((order) => (
               <tr className="orders-table__row" key={order._id}>
-                <td className="orders-table__cell">
+                <td
+                  className={
+                    order.status === "Enviado"
+                      ? "orders-table__cell orders-table__status-cell orders-table__status-enviado"
+                      : order.status === "Aceptado"
+                        ? "orders-table__cell orders-table__status-cell orders-table__status-aceptado"
+                        : order.status === "Listo"
+                          ? "orders-table__cell orders-table__status-cell orders-table__status-listo"
+                          : "orders-table__cell orders-table__status-cell orders-table__status-entregado"
+                  }
+                  onClick={() => {
+                    handleOrderStatusChange(order);
+                  }}
+                >
                   {order.status === "Enviado"
                     ? "Aceptar"
                     : order.status === "Aceptado"
