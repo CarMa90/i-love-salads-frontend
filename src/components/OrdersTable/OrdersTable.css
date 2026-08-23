@@ -54,7 +54,7 @@
   cursor: pointer;
   border-radius: 20px;
   color: var(--white);
-  background-color: var(--ligth-green);
+  background-color: var(--primary-green);
   transition: all 0.4s ease;
 }
 
