@@ -1,7 +1,6 @@
 .nav {
   background-color: var(--white);
   background-color: var(--soft-white);
-  box-shadow: 0 2px 2px 1px var(--ligth-gray);
 }
 
 .nav__list {

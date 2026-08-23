@@ -20,18 +20,18 @@ function UserInfoPopup() {
         <ul className="popup__user-list">
           {pendingOrders.map((order) => {
             return (
-              <li key={order.id} className="popup__user-item">
-                Pedido: {order.id.slice(-4)}{" "}
-                {order.status === "Enviado" ? (
-                  <span className="popup__user-enviado">Enviado</span>
-                ) : order.status === "Aceptado" ? (
-                  <span className="popup__user-aceptado">En preparación</span>
-                ) : order.status === "Listo" ? (
-                  <span className="popup__user-listo">Orden lista</span>
-                ) : (
-                  "Estatus desconocido"
-                )}
-              </li>
+              order.status !== "Entregado" && (
+                <li key={order._id} className="popup__user-item">
+                  Pedido: {order._id.slice(-4)}{" "}
+                  {order.status === "Enviado" ? (
+                    <span className="popup__user-enviado">Enviado</span>
+                  ) : order.status === "Aceptado" ? (
+                    <span className="popup__user-aceptado">En preparación</span>
+                  ) : order.status === "Listo" ? (
+                    <span className="popup__user-listo">Orden lista</span>
+                  ) : null}
+                </li>
+              )
             );
           })}
         </ul>

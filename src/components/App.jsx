@@ -5,8 +5,10 @@ import { ProductsContext } from "../contexts/ProductsContext";
 import { UserContext } from "../contexts/UserContext";
 import ProductSection from "./ProductSection/ProductSection";
 import { useState } from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
 import Popup from "./Popup/Popup";
 import Footer from "./Footer/Footer";
+import OrdersTable from "./OrdersTable/OrdersTable";
 
 const groups = [
   { name: "Ensaladas", _id: "65f1a2b3c4d5e6f7a8b9c011" },
@@ -142,18 +144,43 @@ function App() {
             groups,
             products,
             handleOpenPopup,
+            handleClosePopup,
             setCartItems,
             cartItems,
             orders,
             setOrders,
           }}
         >
-          <Header>
-            <Navigation />
-          </Header>
-          <ProductSection />
-          <Footer />
-          {popup && <Popup onClose={handleClosePopup}>{popup.children}</Popup>}
+          <div className="page__content">
+            <Routes>
+              <Route
+                path="/"
+                element={
+                  <>
+                    <Header>
+                      <Navigation />
+                    </Header>
+                    <ProductSection />
+                    <Footer />
+                    {popup && (
+                      <Popup onClose={handleClosePopup}>{popup.children}</Popup>
+                    )}
+                  </>
+                }
+              />
+              <Route
+                path="/backoffice"
+                element={
+                  <>
+                    <Header />
+                    <OrdersTable />
+                    <Footer />
+                  </>
+                }
+              />
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
+          </div>
         </ProductsContext.Provider>
       </UserContext.Provider>
     </>
