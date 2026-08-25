@@ -1,3 +1,4 @@
+import "./UserInfoPopup.css";
 import "../Popup.css";
 import { useContext } from "react";
 import { UserContext } from "../../../contexts/UserContext";

@@ -1,3 +1,4 @@
+import "./CartPopup.css";
 import { useContext, useState } from "react";
 import { ProductsContext } from "../../../contexts/ProductsContext";
 import { UserContext } from "../../../contexts/UserContext";

@@ -1,0 +1,69 @@
+.popup__user-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.popup__user-content {
+  flex-grow: 1;
+}
+
+.popup__user-item {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  list-style: none;
+}
+
+.popup__user-item span {
+  font-weight: bold;
+  font-size: var(--step-0);
+  padding: 7px;
+  color: var(--white);
+  border-radius: 20px;
+}
+
+.popup__user-enviado {
+  border: thin solid var(--primary-red);
+  background-color: var(--primary-red);
+}
+
+.popup__user-aceptado {
+  border: thin solid var(--ligth-green);
+  background-color: var(--ligth-green);
+}
+
+.popup__user-listo {
+  border: thin solid var(--dark-green);
+  background-color: var(--dark-green);
+}
+
+.popup__user-list {
+  font-size: var(--step-0);
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: end;
+  gap: 5px;
+  max-height: 280px;
+  overflow-y: auto;
+}
+
+.popup__user-logout-btn {
+  color: var(--gray);
+  padding: 10px;
+  font-size: var(--step-0);
+  background-color: var(--white);
+  border: thin solid var(--primary-red);
+  border-radius: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.4s ease;
+}
+
+.popup__user-logout-btn:hover {
+  color: var(--white);
+  background-color: var(--primary-red);
+}

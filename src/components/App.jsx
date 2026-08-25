@@ -142,6 +142,7 @@ function App() {
     _id: "64a2b9f1e4b0c8a1b2c3d4e5",
     name: "Carlos",
     email: "ejemplo@email.com",
+    type: "client",
   });
 
   useEffect(() => {
