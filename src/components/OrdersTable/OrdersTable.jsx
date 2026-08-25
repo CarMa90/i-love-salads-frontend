@@ -4,7 +4,7 @@ import { ProductsContext } from "../../contexts/ProductsContext";
 import { api } from "../../utils/api";
 
 function OrdersTable() {
-  const { orders } = useContext(ProductsContext);
+  const { orders, getOrders } = useContext(ProductsContext);
 
   function handleOrderStatusChange(order) {
     const newStatus =
@@ -16,7 +16,7 @@ function OrdersTable() {
 
     api
       .changeOrderStatus({ _id: order._id, status: newStatus })
-      .then((res) => console.log(res));
+      .then(() => getOrders());
   }
 
   return (

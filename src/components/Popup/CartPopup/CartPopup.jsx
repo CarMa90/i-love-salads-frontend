@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { ProductsContext } from "../../../contexts/ProductsContext";
 import { UserContext } from "../../../contexts/UserContext";
 import trashCan from "../../../assets/delete-icon.svg";
@@ -32,7 +32,16 @@ function CartPopup() {
     setCartItems([]);
   }
 
+  const [emptyCart, setEmptyCart] = useState(false);
+
   function handleOrder(items) {
+    if (items.length === 0) {
+      setEmptyCart((prevValue) => {
+        return !prevValue;
+      });
+      return console.warn("No puedes realizar un pedido sin productos!");
+    }
+
     const timestamp = Date.now();
 
     (async () => {
@@ -60,6 +69,11 @@ function CartPopup() {
       <h3 className="popup__title">Carrito de compras:</h3>
       <div className="popup__cart-content">
         <ul className="popup__cart-list">
+          {cartItems.length === 0 && emptyCart === true && (
+            <li className="popup__cart-item">
+              Debes añadir productos para poder realizar tu pedido
+            </li>
+          )}
           {cartItems.map((item) => {
             return (
               <li key={item._id} className="popup__cart-item">
