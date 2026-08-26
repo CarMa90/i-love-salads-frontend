@@ -35,8 +35,8 @@
 }
 
 .popup__user-listo {
-  border: thin solid var(--dark-green);
-  background-color: var(--dark-green);
+  border: thin solid var(--primary-blue);
+  background-color: var(--primary-blue);
 }
 
 .popup__user-list {

@@ -54,12 +54,12 @@
   cursor: pointer;
   border-radius: 20px;
   color: var(--white);
-  background-color: var(--primary-green);
+  background-color: var(--dark-blue);
   transition: all 0.4s ease;
 }
 
 .orders-table__details-cell:hover {
-  background-color: var(--dark-green);
+  background-color: var(--primary-blue);
 }
 
 .orders-table__status-cell {
@@ -77,11 +77,11 @@
 }
 
 .orders-table__status-listo {
-  background-color: var(--primary-green);
+  background-color: var(--primary-blue);
 }
 
 .orders-table__status-entregado {
-  background-color: var(--dark-green);
+  background-color: var(--primary-green);
 }
 
 .orders-table__table {

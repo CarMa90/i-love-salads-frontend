@@ -1,0 +1,76 @@
+.popup-details__buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.popup-details__button {
+  border-radius: 15px;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+  border: medium solid;
+}
+
+.popup-details__button-cancel {
+  cursor: pointer;
+  color: var(--primary-red);
+  border-color: var(--primary-red);
+  transition: all 0.4s ease;
+}
+
+.popup-details__button-cancel:hover {
+  color: var(--white);
+  background-color: var(--primary-red);
+}
+
+.popup-details__button-message {
+  cursor: pointer;
+  color: var(--primary-green);
+  border-color: var(--primary-green);
+  transition: all 0.4s ease;
+}
+
+.popup-details__button-message:hover {
+  color: var(--white);
+  background-color: var(--primary-green);
+}
+
+.popup-details__button-print {
+  cursor: pointer;
+  color: var(--primary-blue);
+  border-color: var(--primary-blue);
+  transition: all 0.4s ease;
+}
+
+.popup-details__button-print:hover {
+  color: var(--white);
+  background-color: var(--primary-blue);
+}
+
+.popup-details__header {
+  color: var(--black);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.popup-details__order-list {
+  flex-grow: 1;
+  font-weight: bold;
+  font-size: var(--step-0);
+  color: var(--gray);
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: start;
+  gap: 5px;
+  max-height: 280px;
+  overflow-y: auto;
+}
+
+.popup-details__order-product {
+  list-style: none;
+}

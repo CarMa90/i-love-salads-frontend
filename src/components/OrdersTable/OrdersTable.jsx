@@ -1,10 +1,11 @@
 import "./OrdersTable.css";
 import { useContext } from "react";
 import { ProductsContext } from "../../contexts/ProductsContext";
+import OrderDetailsPopup from "../Popup/OrderDetailsPopup/OrderDetailsPopup";
 import { api } from "../../utils/api";
 
 function OrdersTable() {
-  const { orders, getOrders } = useContext(ProductsContext);
+  const { orders, getOrders, handleOpenPopup } = useContext(ProductsContext);
 
   function handleOrderStatusChange(order) {
     const newStatus =
@@ -58,7 +59,12 @@ function OrdersTable() {
                         : "Entregado"}
                 </td>
                 <td className="orders-table__cell">{order.client}</td>
-                <td className="orders-table__cell orders-table__details-cell">
+                <td
+                  className="orders-table__cell orders-table__details-cell"
+                  onClick={() => {
+                    handleOpenPopup(<OrderDetailsPopup order={order} />);
+                  }}
+                >
                   Detalles
                 </td>
                 <td className="orders-table__cell">

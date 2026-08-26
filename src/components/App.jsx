@@ -197,6 +197,7 @@ function App() {
                     <Header />
                     <OrdersTable />
                     <Footer />
+                    {popup && <Popup onClose={handleClosePopup}>{popup}</Popup>}
                   </>
                 }
               />

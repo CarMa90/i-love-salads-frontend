@@ -37,8 +37,8 @@ function CartPopup() {
 
   function handleOrder(items) {
     if (items.length === 0) {
-      setEmptyCart((prevValue) => {
-        return !prevValue;
+      setEmptyCart(() => {
+        return true;
       });
       return console.warn("No puedes realizar un pedido sin productos!");
     }
@@ -71,7 +71,7 @@ function CartPopup() {
       <div className="popup__cart-content">
         <ul className="popup__cart-list">
           {cartItems.length === 0 && emptyCart === true && (
-            <li className="popup__cart-item">
+            <li className="popup__cart-item popup__cart-item-empty-cart">
               Debes añadir productos para poder realizar tu pedido
             </li>
           )}
