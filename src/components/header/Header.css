@@ -60,7 +60,7 @@
 }
 
 .header__cart-icon {
-  filter: brightness(0) invert(1);
+  color: var(--white);
 }
 
 .header__user-icon,

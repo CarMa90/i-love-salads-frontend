@@ -1,12 +1,12 @@
 import logo from "../../assets/logo.svg";
 import profileIcon from "../../assets/user-icon.svg";
-import cartIcon from "../../assets/shopping-cart.svg";
 import CartPopup from "../Popup/CartPopup/CartPopup";
 import UserInfoPopup from "../Popup/UserInfoPopup/UserInfoPopup";
 import "./Header.css";
 import { useContext } from "react";
 import { ProductsContext } from "../../contexts/ProductsContext";
 import { UserContext } from "../../contexts/UserContext";
+import { ShoppingCart } from "lucide-react";
 
 function Header({ children }) {
   const { handleOpenPopup, cartItems } = useContext(ProductsContext);
@@ -45,11 +45,7 @@ function Header({ children }) {
                   }}
                   className="header__button header__cart-button"
                 >
-                  <img
-                    src={cartIcon}
-                    alt="cart icon"
-                    className="header__cart-icon"
-                  />
+                  <ShoppingCart className="header__cart-icon" size={20} />
                   {itemsQuantity > 0 && (
                     <div className="header__button-info">{itemsQuantity}</div>
                   )}
