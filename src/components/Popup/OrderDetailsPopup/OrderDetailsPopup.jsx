@@ -1,5 +1,5 @@
 import "./OrderDetailsPopup.css";
-import { Printer, Send, X } from "lucide-react";
+import { Printer, MessageCircle, X } from "lucide-react";
 
 function OrderDetailsPopup({ order }) {
   return (
@@ -32,7 +32,7 @@ function OrderDetailsPopup({ order }) {
           <Printer />
         </button>
         <button className="popup-details__button popup-details__button-message">
-          <Send />
+          <MessageCircle />
         </button>
         <button className="popup-details__button popup-details__button-cancel">
           <X />

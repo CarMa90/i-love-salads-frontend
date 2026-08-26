@@ -79,15 +79,6 @@ function OrdersTable() {
                 <td className="orders-table__cell">{order._id}</td>
               </tr>
             ))}
-            <tr className="orders-table__row" key="123456">
-              <td className="orders-table__cell">Enviado</td>
-              <td className="orders-table__cell">Carlos A Castro</td>
-              <td className="orders-table__cell orders-table__details-cell">
-                Detalles
-              </td>
-              <td className="orders-table__cell">$ 1000 mxn</td>
-              <td className="orders-table__cell">1234</td>
-            </tr>
           </tbody>
         </table>
       </div>

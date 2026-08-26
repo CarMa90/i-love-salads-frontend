@@ -148,7 +148,7 @@ function App() {
   useEffect(() => {
     getOrders();
 
-    /* 
+    /*
     const interval = setInterval(() => {
       getOrders();
     }, 5000);

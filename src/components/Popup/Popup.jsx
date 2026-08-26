@@ -1,6 +1,6 @@
 import "./Popup.css";
-import closeIcon from "../../assets/close.svg";
 import { useEffect } from "react";
+import { X } from "lucide-react";
 
 function Popup(props) {
   const { onClose, children } = props;
@@ -27,7 +27,7 @@ function Popup(props) {
           onClick={(event) => event.stopPropagation()}
         >
           <button className="popup__close" onClick={onClose}>
-            <img src={closeIcon} alt="close" />
+            <X />
           </button>
           {children}
         </div>

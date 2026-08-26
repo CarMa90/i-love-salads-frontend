@@ -5,6 +5,7 @@ import { UserContext } from "../../../contexts/UserContext";
 import trashCan from "../../../assets/delete-icon.svg";
 import UserInfoPopup from "../UserInfoPopup/UserInfoPopup";
 import { api } from "../../../utils/api";
+import { ShoppingCart, ArrowRight, Trash2 } from "lucide-react";
 
 function CartPopup() {
   const {
@@ -67,7 +68,12 @@ function CartPopup() {
 
   return (
     <>
-      <h3 className="popup__title">Carrito de compras:</h3>
+      <div className="popup__cart-head">
+        <div className="popup__cart-icon">
+          <ShoppingCart />
+        </div>
+        <h3 className="popup__title">Carrito de compras:</h3>
+      </div>
       <div className="popup__cart-content">
         <ul className="popup__cart-list">
           {cartItems.length === 0 && emptyCart === true && (
@@ -99,7 +105,8 @@ function CartPopup() {
             handleRemoveAll();
           }}
         >
-          Borrar todo
+          <Trash2 />
+          <span>Borrar todo</span>
         </button>
         <button
           className="popup__cart-button"
@@ -107,7 +114,8 @@ function CartPopup() {
             handleOrder(cartItems);
           }}
         >
-          Ordenar
+          <span>Ordenar</span>
+          <ArrowRight />
         </button>
       </div>
     </>
