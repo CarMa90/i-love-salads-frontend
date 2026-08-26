@@ -2,7 +2,6 @@ import "./CartPopup.css";
 import { useContext, useState } from "react";
 import { ProductsContext } from "../../../contexts/ProductsContext";
 import { UserContext } from "../../../contexts/UserContext";
-import trashCan from "../../../assets/delete-icon.svg";
 import UserInfoPopup from "../UserInfoPopup/UserInfoPopup";
 import { api } from "../../../utils/api";
 import { ShoppingCart, ArrowRight, Trash2 } from "lucide-react";
@@ -19,6 +18,12 @@ function CartPopup() {
   } = useContext(ProductsContext);
   const { currentUser } = useContext(UserContext);
   const userInfoPopup = { children: <UserInfoPopup /> };
+
+  console.log(cartItems);
+
+  const cartTotal = cartItems.reduce((acumulador, itemActual) => {
+    return acumulador + itemActual.price * itemActual.quantity;
+  }, 0);
 
   function handleRemoveItem(item) {
     setCartItems((prevItems) => {
@@ -84,20 +89,34 @@ function CartPopup() {
           {cartItems.map((item) => {
             return (
               <li key={item._id} className="popup__cart-item">
-                {`${item.quantity} x ${item.name} total: $${item.quantity * item.price}mxn`}{" "}
+                <img
+                  className="popup__cart-item-image"
+                  src={item.image}
+                  alt="producto"
+                />
+                <div className="popup__cart-item-info">
+                  <div className="popup__cart-item-name">{item.name}</div>
+                  <div className="popup__cart-item-price">{`${item.quantity} x $${item.price}mxn`}</div>
+                </div>
                 <button
                   className="popup__cart-delete-item-btn"
                   onClick={() => {
                     handleRemoveItem(item);
                   }}
                 >
-                  <img src={trashCan} alt="eliminar" />
+                  <Trash2 size={18} />
                 </button>
               </li>
             );
           })}
         </ul>
       </div>
+      {cartItems.length > 0 && (
+        <div className="popup__cart-total">
+          <div className="popup__cart-total-text">Total</div>
+          <div className="popup__cart-total-number">$ {cartTotal} mxn</div>
+        </div>
+      )}
       <div className="popup__cart-buttons">
         <button
           className="popup__cart-button popup__cart-delete-btn"
