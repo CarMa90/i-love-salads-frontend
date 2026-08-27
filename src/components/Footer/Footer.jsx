@@ -34,7 +34,7 @@ function Footer() {
             <Phone size="var(--step-0)" color="var(--dark-green)" />
             <div>
               <p className="footer__text">Teléfono:</p>
-              <p className="footer__subtext">612 121 4954</p>
+              <p className="footer__subtext">258 106 7042</p>
             </div>
           </div>
         </div>

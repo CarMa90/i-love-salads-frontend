@@ -19,8 +19,6 @@ function CartPopup() {
   const { currentUser } = useContext(UserContext);
   const userInfoPopup = { children: <UserInfoPopup /> };
 
-  console.log(cartItems);
-
   const cartTotal = cartItems.reduce((acumulador, itemActual) => {
     return acumulador + itemActual.price * itemActual.quantity;
   }, 0);
@@ -57,9 +55,16 @@ function CartPopup() {
           products: items,
           client: currentUser.name,
           clientId: currentUser._id,
+          mobile: currentUser.mobile,
           date: new Date(timestamp).toLocaleDateString("es-MX"),
-          time: new Date(timestamp).toLocaleTimeString("es-MX"),
+          time: (() => {
+            const date = new Date(timestamp);
+            const horas = String(date.getHours()).padStart(2, "0");
+            const minutos = String(date.getMinutes()).padStart(2, "0");
+            return `${horas}:${minutos}`;
+          })(),
           status: "Enviado",
+          cancelMessage: "",
         })
         .then((newOrder) => {
           setOrders([newOrder, ...orders]);
@@ -67,7 +72,8 @@ function CartPopup() {
           getOrders();
           handleClosePopup();
           handleOpenPopup(userInfoPopup);
-        });
+        })
+        .catch((err) => console.log(err));
     })();
   }
 

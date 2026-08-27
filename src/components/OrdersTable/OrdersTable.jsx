@@ -8,6 +8,10 @@ function OrdersTable() {
   const { orders, getOrders, handleOpenPopup } = useContext(ProductsContext);
 
   function handleOrderStatusChange(order) {
+    if (order.status === "Cancelado" || order.status === "Entregado") {
+      return;
+    }
+
     const newStatus =
       order.status === "Enviado"
         ? "Aceptado"

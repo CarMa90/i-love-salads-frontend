@@ -1,0 +1,94 @@
+.popup-cancel__buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.popup-cancel__button {
+  cursor: pointer;
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  color: var(--gray);
+  height: 45px;
+  background-color: transparent;
+  font-size: var(--step-0);
+  font-weight: bold;
+  padding: 10px;
+  border: thin solid var(--primary-green);
+  border-radius: 20px;
+  transition: all 0.4s ease;
+}
+
+.popup-cancel__button:hover {
+  background-color: var(--primary-green);
+  color: var(--white);
+}
+
+.popup-cancel__cancel-btn {
+  border-color: var(--primary-red);
+}
+
+.popup-cancel__cancel-btn:hover {
+  background-color: var(--primary-red);
+  color: var(--white);
+}
+
+.popup-cancel__form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-top: 10px;
+  font-size: var(--step-0);
+  width: 100%;
+  flex-grow: 1;
+}
+
+.popup-cancel__head {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 10px;
+  border-bottom: thin solid var(--ligth-gray);
+}
+
+.popup-cancel__icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  border: thin solid var(--ligth-red);
+  border-radius: 50%;
+  background-color: var(--ligth-red);
+  color: var(--primary-red);
+}
+
+.popup-cancel__label span {
+  color: var(--primary-red);
+}
+
+.popup-cancel__textarea {
+  background-color: transparent;
+  border: thin solid var(--ligth-gray);
+  padding: 5px;
+  border-radius: 5px;
+  resize: none;
+  height: 90px;
+}
+
+.popup-cancel__text {
+  margin: 0;
+  font-size: var(--step--1);
+  color: var(--gray);
+}
+
+.popup-cancel__title {
+  margin: 0;
+  font-size: var(--step-2);
+  color: var(--black);
+}

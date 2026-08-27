@@ -25,6 +25,8 @@ class Api {
         date: data.date,
         time: data.time,
         status: "Enviado",
+        mobile: data.mobile,
+        cancelMessage: data.cancelMessage,
       }),
       method: "POST",
     }).then((res) => {
