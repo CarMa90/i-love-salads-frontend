@@ -1,11 +1,16 @@
 import "./OrderDetailsPopup.css";
 import { Printer, MessageCircle, X } from "lucide-react";
-import { useContext } from "react";
+import { useContext, useRef } from "react";
 import { ProductsContext } from "../../../contexts/ProductsContext";
 import CancelOrderPopup from "../CancelOrderPopup/CancelOrderPopup";
+import { useReactToPrint } from "react-to-print";
+import ProductionOrder from "../../ProductionOrder/ProductionOrder";
 
 function OrderDetailsPopup({ order }) {
   const { handleOpenPopup } = useContext(ProductsContext);
+
+  const contentRef = useRef(null);
+  const reactToPrintFn = useReactToPrint({ contentRef });
 
   function sendMessage(mobile) {
     const url = `https://api.whatsapp.com/send/?phone=${mobile}`;
@@ -19,6 +24,7 @@ function OrderDetailsPopup({ order }) {
 
   return (
     <>
+      <ProductionOrder contentRef={contentRef} order={order} />
       <div className="popup-details__header">
         <p className="popup-details__subtext">Pedido</p>
         <p className="popup-details__order-number">No. {order._id}</p>
@@ -44,7 +50,12 @@ function OrderDetailsPopup({ order }) {
         <div className="popup-details__total-number">$ {cartTotal} mxn</div>
       </div>
       <div className="popup-details__buttons">
-        <button className="popup-details__button popup-details__button-print">
+        <button
+          className="popup-details__button popup-details__button-print"
+          onClick={() => {
+            reactToPrintFn();
+          }}
+        >
           <Printer />
         </button>
         <button

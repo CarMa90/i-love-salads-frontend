@@ -1,0 +1,50 @@
+.print__content {
+  display: none;
+  margin: 0 auto;
+
+  @media print {
+    @page {
+      size: auto;
+      margin: 20mm;
+    }
+    margin: 10mm;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+.print__list {
+  @media print {
+    list-style: none;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: start;
+    text-align: left;
+    gap: 5px;
+  }
+}
+
+.print__order-info {
+  @media print {
+    margin: 0;
+    text-align: center;
+    width: 100%;
+    padding: 10px;
+    border-bottom: thin dashed var(--black);
+    display: flex;
+    justify-content: space-evenly;
+  }
+}
+
+.print__title {
+  @media print {
+    margin: 0;
+    text-align: center;
+    width: 100%;
+    padding: 10px;
+    border-bottom: thin dashed var(--black);
+  }
+}
