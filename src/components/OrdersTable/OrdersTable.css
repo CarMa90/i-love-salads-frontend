@@ -73,7 +73,8 @@
 }
 
 .orders-table__status-cancelado {
-  background-color: var(--primary-red);
+  color: var(--primary-red);
+  background-color: var(--ligth-red);
 }
 
 .orders-table__status-enviado {

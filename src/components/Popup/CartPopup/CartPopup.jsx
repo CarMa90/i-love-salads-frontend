@@ -5,20 +5,19 @@ import { UserContext } from "../../../contexts/UserContext";
 import UserInfoPopup from "../UserInfoPopup/UserInfoPopup";
 import { api } from "../../../utils/api";
 import { ShoppingCart, ArrowRight, Trash2 } from "lucide-react";
+import ErrorPopup from "../ErrorPopup/ErrorPopup";
 
 function CartPopup() {
   const {
     cartItems,
     setCartItems,
-    orders,
-    setOrders,
     handleOpenPopup,
     handleClosePopup,
     getOrders,
     setLoader,
   } = useContext(ProductsContext);
   const { currentUser } = useContext(UserContext);
-  const userInfoPopup = { children: <UserInfoPopup /> };
+  const userInfoPopup = <UserInfoPopup />;
 
   const cartTotal = cartItems.reduce((acumulador, itemActual) => {
     return acumulador + itemActual.price * itemActual.quantity;
@@ -68,14 +67,17 @@ function CartPopup() {
           status: "Enviado",
           cancelMessage: "",
         })
-        .then((newOrder) => {
-          setOrders([newOrder, ...orders]);
+        .then(async () => {
           setCartItems([]);
-          getOrders();
+          await getOrders();
           handleClosePopup();
           handleOpenPopup(userInfoPopup);
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          console.log(err);
+          handleOpenPopup(<ErrorPopup error={err} />);
+        })
+        .finally(setLoader(false));
     })();
   }
 

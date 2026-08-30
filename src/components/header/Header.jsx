@@ -12,8 +12,8 @@ function Header({ children }) {
   const { handleOpenPopup, cartItems } = useContext(ProductsContext);
   const { currentUser } = useContext(UserContext);
 
-  const cartPopup = { children: <CartPopup /> };
-  const userInfoPopup = { children: <UserInfoPopup /> };
+  const cartPopup = <CartPopup />;
+  const userInfoPopup = <UserInfoPopup />;
 
   let itemsQuantity = 0;
 

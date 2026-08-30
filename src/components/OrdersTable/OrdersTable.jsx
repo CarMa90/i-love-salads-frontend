@@ -3,6 +3,7 @@ import { useContext } from "react";
 import { ProductsContext } from "../../contexts/ProductsContext";
 import OrderDetailsPopup from "../Popup/OrderDetailsPopup/OrderDetailsPopup";
 import { api } from "../../utils/api";
+import ErrorPopup from "../Popup/ErrorPopup/ErrorPopup";
 
 function OrdersTable() {
   const { orders, getOrders, handleOpenPopup, setLoader } =
@@ -24,7 +25,12 @@ function OrdersTable() {
 
     api
       .changeOrderStatus({ _id: order._id, status: newStatus })
-      .then(() => getOrders());
+      .then(() => getOrders())
+      .catch((err) => {
+        console.log(err);
+        handleOpenPopup(<ErrorPopup error={err} />);
+      })
+      .finally(() => setLoader(false));
   }
 
   return (

@@ -12,6 +12,7 @@ import OrdersTable from "./OrdersTable/OrdersTable";
 import { api } from "../utils/api";
 import CanceledOrdersPopup from "./Popup/CanceledOrdersPopup/CanceledOrdersPopup";
 import Loader from "./Loader/Loader";
+import ErrorPopup from "./Popup/ErrorPopup/ErrorPopup";
 
 const groups = [
   { name: "Ensaladas", _id: "65f1a2b3c4d5e6f7a8b9c011" },
@@ -136,11 +137,18 @@ function App() {
 
   const getOrders = async () => {
     setLoader(true);
-    await api.getOrders().then((data) => {
-      setOrders(data.slice().reverse());
-      setLoader(false);
-      // console.log("DATA DE API:", data);
-    });
+    await api
+      .getOrders()
+      .then((data) => {
+        setOrders(data.slice().reverse());
+        setLoader(false);
+        // console.log("DATA DE API:", data);
+      })
+      .catch((err) => {
+        console.log(err);
+        setLoader(false);
+        handleOpenPopup(<ErrorPopup error={err} />);
+      });
   };
 
   const [cartItems, setCartItems] = useState([]);
@@ -203,9 +211,7 @@ function App() {
                     <ProductSection />
                     <Footer />
                     {loader && <Loader />}
-                    {popup && (
-                      <Popup onClose={handleClosePopup}>{popup.children}</Popup>
-                    )}
+                    {popup && <Popup onClose={handleClosePopup}>{popup}</Popup>}
                     {canceledOrders.length > 0 && (
                       <Popup onClose={handleClosePopup}>
                         <CanceledOrdersPopup />

@@ -5,6 +5,7 @@ import { ProductsContext } from "../../../contexts/ProductsContext";
 import OrderDetailsPopup from "../OrderDetailsPopup/OrderDetailsPopup";
 import { validateRequiredText } from "../../../utils/formValidations";
 import { api } from "../../../utils/api";
+import ErrorPopup from "../ErrorPopup/ErrorPopup";
 
 function CancelOrderPopup({ order }) {
   const { _id } = order;
@@ -49,7 +50,11 @@ function CancelOrderPopup({ order }) {
         getOrders();
         handleClosePopup();
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+        handleOpenPopup(<ErrorPopup error={err} />);
+      })
+      .finally(() => setLoader(false));
   }
 
   return (
