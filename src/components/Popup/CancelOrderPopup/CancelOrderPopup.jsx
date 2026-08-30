@@ -9,7 +9,7 @@ import { api } from "../../../utils/api";
 function CancelOrderPopup({ order }) {
   const { _id } = order;
 
-  const { handleOpenPopup, handleClosePopup, getOrders } =
+  const { handleOpenPopup, handleClosePopup, getOrders, setLoader } =
     useContext(ProductsContext);
 
   const [message, setMessage] = useState("");
@@ -36,6 +36,8 @@ function CancelOrderPopup({ order }) {
     }
 
     setError("");
+
+    setLoader(true);
 
     api
       .changeOrderStatus({

@@ -15,6 +15,7 @@ function CartPopup() {
     handleOpenPopup,
     handleClosePopup,
     getOrders,
+    setLoader,
   } = useContext(ProductsContext);
   const { currentUser } = useContext(UserContext);
   const userInfoPopup = { children: <UserInfoPopup /> };
@@ -50,6 +51,7 @@ function CartPopup() {
     const timestamp = Date.now();
 
     (async () => {
+      setLoader(true);
       api
         .getNewOrder({
           products: items,

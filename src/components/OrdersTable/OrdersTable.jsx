@@ -5,7 +5,8 @@ import OrderDetailsPopup from "../Popup/OrderDetailsPopup/OrderDetailsPopup";
 import { api } from "../../utils/api";
 
 function OrdersTable() {
-  const { orders, getOrders, handleOpenPopup } = useContext(ProductsContext);
+  const { orders, getOrders, handleOpenPopup, setLoader } =
+    useContext(ProductsContext);
 
   function handleOrderStatusChange(order) {
     if (order.status === "Cancelado" || order.status === "Entregado") {
@@ -18,6 +19,8 @@ function OrdersTable() {
         : order.status === "Aceptado"
           ? "Listo"
           : "Entregado";
+
+    setLoader(true);
 
     api
       .changeOrderStatus({ _id: order._id, status: newStatus })

@@ -8,10 +8,11 @@ import { api } from "../../../utils/api";
 
 function CanceledOrdersPopup() {
   const { currentUser } = useContext(UserContext);
-  const { canceledOrders, getOrders, handleClosePopup } =
+  const { canceledOrders, getOrders, handleClosePopup, setLoader } =
     useContext(ProductsContext);
 
   const handelAcceptCancelation = (data) => {
+    setLoader(true);
     api
       .changeOrderStatus({ _id: data._id, cancelAcceptance: true })
       .then(() => {

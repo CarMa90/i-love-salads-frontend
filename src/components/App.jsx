@@ -11,6 +11,7 @@ import Footer from "./Footer/Footer";
 import OrdersTable from "./OrdersTable/OrdersTable";
 import { api } from "../utils/api";
 import CanceledOrdersPopup from "./Popup/CanceledOrdersPopup/CanceledOrdersPopup";
+import Loader from "./Loader/Loader";
 
 const groups = [
   { name: "Ensaladas", _id: "65f1a2b3c4d5e6f7a8b9c011" },
@@ -121,6 +122,7 @@ const products = [
 
 function App() {
   const [popup, setPopup] = useState(null);
+  const [loader, setLoader] = useState(false);
 
   function handleOpenPopup(popup) {
     setPopup(popup);
@@ -133,8 +135,10 @@ function App() {
   const [orders, setOrders] = useState([]);
 
   const getOrders = async () => {
+    setLoader(true);
     await api.getOrders().then((data) => {
       setOrders(data.slice().reverse());
+      setLoader(false);
       // console.log("DATA DE API:", data);
     });
   };
@@ -184,6 +188,7 @@ function App() {
             setOrders,
             getOrders,
             canceledOrders,
+            setLoader,
           }}
         >
           <div className="page__content">
@@ -197,6 +202,7 @@ function App() {
                     </Header>
                     <ProductSection />
                     <Footer />
+                    {loader && <Loader />}
                     {popup && (
                       <Popup onClose={handleClosePopup}>{popup.children}</Popup>
                     )}
@@ -216,6 +222,7 @@ function App() {
                     <OrdersTable />
                     <Footer />
                     {popup && <Popup onClose={handleClosePopup}>{popup}</Popup>}
+                    {loader && <Loader />}
                   </>
                 }
               />
