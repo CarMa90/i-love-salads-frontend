@@ -10,6 +10,7 @@ import Popup from "./Popup/Popup";
 import Footer from "./Footer/Footer";
 import OrdersTable from "./OrdersTable/OrdersTable";
 import { api } from "../utils/api";
+import CanceledOrdersPopup from "./Popup/CanceledOrdersPopup/CanceledOrdersPopup";
 
 const groups = [
   { name: "Ensaladas", _id: "65f1a2b3c4d5e6f7a8b9c011" },
@@ -134,6 +135,7 @@ function App() {
   const getOrders = async () => {
     await api.getOrders().then((data) => {
       setOrders(data.slice().reverse());
+      // console.log("DATA DE API:", data);
     });
   };
 
@@ -158,6 +160,15 @@ function App() {
     */
   }, []);
 
+  const canceledOrders = orders.filter(
+    (order) =>
+      order.clientId === currentUser._id &&
+      order.status === "Cancelado" &&
+      !order.cancelAcceptance,
+  );
+
+  // console.log(canceledOrders);
+
   return (
     <>
       <UserContext.Provider value={{ currentUser, setCurrentUser }}>
@@ -172,6 +183,7 @@ function App() {
             orders,
             setOrders,
             getOrders,
+            canceledOrders,
           }}
         >
           <div className="page__content">
@@ -187,6 +199,11 @@ function App() {
                     <Footer />
                     {popup && (
                       <Popup onClose={handleClosePopup}>{popup.children}</Popup>
+                    )}
+                    {canceledOrders.length > 0 && (
+                      <Popup onClose={handleClosePopup}>
+                        <CanceledOrdersPopup />
+                      </Popup>
                     )}
                   </>
                 }

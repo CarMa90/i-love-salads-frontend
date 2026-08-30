@@ -27,6 +27,7 @@ class Api {
         status: "Enviado",
         mobile: data.mobile,
         cancelMessage: data.cancelMessage,
+        cancelAcceptance: false,
       }),
       method: "POST",
     }).then((res) => {

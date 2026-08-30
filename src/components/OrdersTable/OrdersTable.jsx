@@ -48,7 +48,9 @@ function OrdersTable() {
                         ? "orders-table__cell orders-table__status-cell orders-table__status-aceptado"
                         : order.status === "Listo"
                           ? "orders-table__cell orders-table__status-cell orders-table__status-listo"
-                          : "orders-table__cell orders-table__status-cell orders-table__status-entregado"
+                          : order.status === "Entregado"
+                            ? "orders-table__cell orders-table__status-cell orders-table__status-entregado"
+                            : "orders-table__cell orders-table__status-cell orders-table__status-cancelado"
                   }
                   onClick={() => {
                     handleOrderStatusChange(order);
@@ -60,7 +62,9 @@ function OrdersTable() {
                       ? "Preparando..."
                       : order.status === "Listo"
                         ? "Orden Lista"
-                        : "Entregado"}
+                        : order.status === "Entregado"
+                          ? "Entregado"
+                          : "Cancelado"}
                 </td>
                 <td className="orders-table__cell">{order.client}</td>
                 <td

@@ -11,7 +11,9 @@ function UserInfoPopup() {
 
   const pendingOrders = orders.filter(
     (order) =>
-      order.clientId === currentUser._id && order.status !== "Entregado",
+      order.clientId === currentUser._id &&
+      order.status !== "Entregado" &&
+      order.status !== "Cancelado",
   );
 
   return (
@@ -22,7 +24,8 @@ function UserInfoPopup() {
         <ul className="popup__user-list">
           {pendingOrders.map((order) => {
             return (
-              order.status !== "Entregado" && (
+              order.status !== "Entregado" &&
+              order.status !== "Cancelado" && (
                 <li key={order._id} className="popup__user-item">
                   <div>
                     <div className="popup__user-shopping-bag">

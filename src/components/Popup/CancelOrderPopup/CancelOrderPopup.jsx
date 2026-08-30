@@ -1,13 +1,54 @@
 import "./CancelOrderPopup.css";
 import { TicketX, Trash2 } from "lucide-react";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { ProductsContext } from "../../../contexts/ProductsContext";
 import OrderDetailsPopup from "../OrderDetailsPopup/OrderDetailsPopup";
+import { validateRequiredText } from "../../../utils/formValidations";
+import { api } from "../../../utils/api";
 
 function CancelOrderPopup({ order }) {
   const { _id } = order;
 
-  const { handleOpenPopup } = useContext(ProductsContext);
+  const { handleOpenPopup, handleClosePopup, getOrders } =
+    useContext(ProductsContext);
+
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
+
+  function handleChange(e) {
+    setMessage(e.target.value);
+  }
+
+  function handleCancelOrder(order, message) {
+    const validationError = validateRequiredText(
+      message,
+      "Debes escribir un motivo de cancelación",
+    );
+
+    if (validationError) {
+      setError(validationError);
+      return;
+    }
+
+    if (order.status === "Cancelado") {
+      setError("Esta orden ya fue cancelada");
+      return;
+    }
+
+    setError("");
+
+    api
+      .changeOrderStatus({
+        _id: order._id,
+        status: "Cancelado",
+        cancelMessage: message,
+      })
+      .then(() => {
+        getOrders();
+        handleClosePopup();
+      })
+      .catch((err) => console.log(err));
+  }
 
   return (
     <>
@@ -29,7 +70,11 @@ function CancelOrderPopup({ order }) {
           name="message"
           id="message"
           placeholder="Escribe el motivo de la cancelación"
+          required
+          value={message}
+          onChange={handleChange}
         ></textarea>
+        {error && <span className="popup-cancel__error-message">{error}</span>}
         <div className="popup-cancel__buttons">
           <button
             className="popup-cancel__button"
@@ -44,7 +89,7 @@ function CancelOrderPopup({ order }) {
             className="popup-cancel__button popup-cancel__cancel-btn"
             onClick={(e) => {
               e.preventDefault();
-              console.log("funcionó el prevent default");
+              handleCancelOrder(order, message);
             }}
           >
             <Trash2 size={20} />

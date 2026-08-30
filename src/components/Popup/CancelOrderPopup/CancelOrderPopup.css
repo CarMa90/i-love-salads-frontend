@@ -37,6 +37,13 @@
   color: var(--white);
 }
 
+.popup-cancel__error-message {
+  text-align: center;
+  font-weight: bold;
+  font-size: var(--step--1);
+  color: var(--primary-red);
+}
+
 .popup-cancel__form {
   display: flex;
   flex-direction: column;

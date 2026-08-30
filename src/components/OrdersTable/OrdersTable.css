@@ -68,20 +68,24 @@
   color: var(--white);
 }
 
-.orders-table__status-enviado {
-  background-color: var(--primary-red);
-}
-
 .orders-table__status-aceptado {
   background-color: var(--ligth-green);
 }
 
-.orders-table__status-listo {
-  background-color: var(--primary-blue);
+.orders-table__status-cancelado {
+  background-color: var(--primary-red);
+}
+
+.orders-table__status-enviado {
+  background-color: var(--primary-red);
 }
 
 .orders-table__status-entregado {
   background-color: var(--primary-green);
+}
+
+.orders-table__status-listo {
+  background-color: var(--primary-blue);
 }
 
 .orders-table__table {
