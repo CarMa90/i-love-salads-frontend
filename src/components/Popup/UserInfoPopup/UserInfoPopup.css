@@ -110,14 +110,14 @@
   border-radius: 50%;
 }
 
-.popup__subtitle {
+.popup-user__subtitle {
   position: relative;
   display: inline-block;
   padding-bottom: 5px;
   margin-bottom: 5px;
 }
 
-.popup__subtitle::after {
+.popup-user__subtitle::after {
   content: "";
   position: absolute;
   bottom: 0;

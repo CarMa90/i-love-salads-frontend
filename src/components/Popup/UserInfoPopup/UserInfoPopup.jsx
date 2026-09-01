@@ -20,7 +20,7 @@ function UserInfoPopup() {
     <>
       <h3 className="popup__title">Hola, {currentUser.name} 👋🏼</h3>
       <div className="popup__user-content">
-        <h4 className="popup__subtitle">Pedidos en curso</h4>
+        <h4 className="popup-user__subtitle">Pedidos en curso</h4>
         <ul className="popup__user-list">
           {pendingOrders.map((order) => {
             return (
@@ -53,11 +53,11 @@ function UserInfoPopup() {
           })}
         </ul>
       </div>
-      <div className="popup__user-buttons">
+      {/* <div className="popup__user-buttons">
         <button className="popup__user-logout-btn">
           <LogOut /> <span>Cerrar sesión</span>
         </button>
-      </div>
+      </div> */}
     </>
   );
 }

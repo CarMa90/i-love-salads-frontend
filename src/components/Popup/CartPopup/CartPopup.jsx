@@ -47,10 +47,11 @@ function CartPopup() {
       return console.warn("No puedes realizar un pedido sin productos!");
     }
 
+    setLoader(true);
+
     const timestamp = Date.now();
 
     (async () => {
-      setLoader(true);
       api
         .getNewOrder({
           products: items,

@@ -3,12 +3,12 @@ import { useContext } from "react";
 import { ProductsContext } from "../../contexts/ProductsContext";
 
 function Navigation() {
-  const { groups } = useContext(ProductsContext);
+  const { GROUPS } = useContext(ProductsContext);
   return (
     <>
       <nav className="nav">
         <ul className="nav__list">
-          {groups.map((item) => {
+          {GROUPS.map((item) => {
             return (
               <li key={item._id} className="nav__item">
                 <a className="nav__link" href={`#${item.name.toLowerCase()}`}>

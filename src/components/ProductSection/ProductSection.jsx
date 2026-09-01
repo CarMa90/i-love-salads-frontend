@@ -4,11 +4,11 @@ import { ProductsContext } from "../../contexts/ProductsContext";
 import Card from "./Card/Card";
 
 function ProductSection() {
-  const { groups, products } = useContext(ProductsContext);
+  const { GROUPS, PRODUCTS } = useContext(ProductsContext);
 
   return (
     <>
-      {groups.map((item) => {
+      {GROUPS.map((item) => {
         return (
           <section
             key={item._id}
@@ -20,7 +20,7 @@ function ProductSection() {
                 {item.name.toUpperCase()}
               </h2>
               <div className="product-section__grid">
-                {products.map((product) => {
+                {PRODUCTS.map((product) => {
                   return (
                     product.type === item.name && (
                       <Card key={product._id} product={product} />
