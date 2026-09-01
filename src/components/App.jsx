@@ -1,5 +1,5 @@
 import "./App.css";
-import Header from "./header/Header";
+import Header from "./Header/Header";
 import Navigation from "./Navigation/Navigation";
 import { ProductsContext } from "../contexts/ProductsContext";
 import { UserContext } from "../contexts/UserContext";
@@ -123,7 +123,7 @@ const products = [
 
 function App() {
   const [popup, setPopup] = useState(null);
-  const [loader, setLoader] = useState(false);
+  const [loader, setLoader] = useState(true);
 
   function handleOpenPopup(popup) {
     setPopup(popup);
@@ -136,7 +136,6 @@ function App() {
   const [orders, setOrders] = useState([]);
 
   const getOrders = async () => {
-    setLoader(true);
     await api
       .getOrders()
       .then((data) => {
@@ -162,14 +161,6 @@ function App() {
 
   useEffect(() => {
     getOrders();
-
-    /*
-    const interval = setInterval(() => {
-      getOrders();
-    }, 5000);
-
-    return () => clearInterval(interval);
-    */
   }, []);
 
   const canceledOrders = orders.filter(
@@ -205,7 +196,7 @@ function App() {
                 path="/"
                 element={
                   <>
-                    <Header>
+                    <Header administrador={false}>
                       <Navigation />
                     </Header>
                     <ProductSection />
@@ -224,7 +215,7 @@ function App() {
                 path="/backoffice"
                 element={
                   <>
-                    <Header />
+                    <Header administrador={true} />
                     <OrdersTable />
                     <Footer />
                     {popup && <Popup onClose={handleClosePopup}>{popup}</Popup>}

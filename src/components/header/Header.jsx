@@ -5,12 +5,10 @@ import UserInfoPopup from "../Popup/UserInfoPopup/UserInfoPopup";
 import "./Header.css";
 import { useContext } from "react";
 import { ProductsContext } from "../../contexts/ProductsContext";
-import { UserContext } from "../../contexts/UserContext";
 import { ShoppingCart } from "lucide-react";
 
-function Header({ children }) {
+function Header({ children, administrador }) {
   const { handleOpenPopup, cartItems } = useContext(ProductsContext);
-  const { currentUser } = useContext(UserContext);
 
   const cartPopup = <CartPopup />;
   const userInfoPopup = <UserInfoPopup />;
@@ -25,7 +23,7 @@ function Header({ children }) {
         <div className="header__content">
           <img className="header__logo" src={logo} alt="logo i love salads" />
           <div className="header__icons">
-            {currentUser.type === "client" ? (
+            {administrador === false && (
               <>
                 <button
                   className="header__button"
@@ -51,8 +49,6 @@ function Header({ children }) {
                   )}
                 </button>
               </>
-            ) : (
-              <div></div>
             )}
           </div>
         </div>
