@@ -2,6 +2,11 @@
 
 Plataforma moderna para realizar pedidos online de ensaladas, baguettes, sopas y bebidas. Incluye panel de administración para gestionar órdenes y un sistema completo de carrito de compras.
 
+## 🌐 Proyecto desplegado
+
+- [Aplicación principal](https://CarMa90.github.io/i-love-salads-frontend)
+- [Backoffice](https://CarMa90.github.io/i-love-salads-frontend/backoffice)
+
 ## ✨ Características
 
 - 🛒 **Carrito de Compras**: Gestión intuitiva de productos seleccionados
