@@ -78,7 +78,9 @@ function CartPopup() {
           console.log(err);
           handleOpenPopup(<ErrorPopup error={err} />);
         })
-        .finally(setLoader(false));
+        .finally(() => {
+          setLoader(false);
+        });
     })();
   }
 
