@@ -9,15 +9,21 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import Popup from "./Popup/Popup";
 import Footer from "./Footer/Footer";
 import OrdersTable from "./OrdersTable/OrdersTable";
+import HeaderClient from "./Header/HeaderClient/HeaderClient";
 import { api } from "../utils/api";
 import CanceledOrdersPopup from "./Popup/CanceledOrdersPopup/CanceledOrdersPopup";
 import Loader from "./Loader/Loader";
 import ErrorPopup from "./Popup/ErrorPopup/ErrorPopup";
 import { GROUPS, PRODUCTS } from "../constants";
+import Register from "./Register/Register";
+import Login from "./Login/Login";
 
 function App() {
   const [popup, setPopup] = useState(null);
   const [loader, setLoader] = useState(true);
+  const [success, setSuccess] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   function handleOpenPopup(popup) {
     setPopup(popup);
@@ -68,7 +74,18 @@ function App() {
 
   return (
     <>
-      <UserContext.Provider value={{ currentUser, setCurrentUser }}>
+      <UserContext.Provider
+        value={{
+          currentUser,
+          setCurrentUser,
+          success,
+          setSuccess,
+          isOpen,
+          setIsOpen,
+          errorMessage,
+          setErrorMessage,
+        }}
+      >
         <ProductsContext.Provider
           value={{
             PRODUCTS,
@@ -90,7 +107,7 @@ function App() {
                 path="/"
                 element={
                   <>
-                    <Header administrador={false}>
+                    <Header secondaryComponent={<HeaderClient />}>
                       <Navigation />
                     </Header>
                     <ProductSection />
@@ -109,8 +126,32 @@ function App() {
                 path="/backoffice"
                 element={
                   <>
-                    <Header administrador={true} />
+                    <Header />
                     <OrdersTable />
+                    <Footer />
+                    {popup && <Popup onClose={handleClosePopup}>{popup}</Popup>}
+                    {loader && <Loader />}
+                  </>
+                }
+              />
+              <Route
+                path="/signup"
+                element={
+                  <>
+                    <Header />
+                    <Register />
+                    <Footer />
+                    {popup && <Popup onClose={handleClosePopup}>{popup}</Popup>}
+                    {loader && <Loader />}
+                  </>
+                }
+              />
+              <Route
+                path="/signin"
+                element={
+                  <>
+                    <Header />
+                    <Login />
                     <Footer />
                     {popup && <Popup onClose={handleClosePopup}>{popup}</Popup>}
                     {loader && <Loader />}
