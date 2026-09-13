@@ -39,3 +39,20 @@ export const authorize = ({ password, email }) => {
     return Promise.reject(error);
   });
 };
+
+export const tokenValidation = (token) => {
+  return fetch(`${API_URL}/users/me`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  }).then(async (res) => {
+    if (res.ok) {
+      return res.json();
+    }
+
+    const error = await res.json();
+    return Promise.reject(error);
+  });
+};

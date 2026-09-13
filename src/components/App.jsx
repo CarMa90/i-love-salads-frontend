@@ -17,6 +17,8 @@ import ErrorPopup from "./Popup/ErrorPopup/ErrorPopup";
 import { GROUPS, PRODUCTS } from "../constants";
 import Register from "./Register/Register";
 import Login from "./Login/Login";
+import { getToken, removeToken } from "../utils/token";
+import { tokenValidation } from "../utils/auth";
 
 function App() {
   const [popup, setPopup] = useState(null);
@@ -24,6 +26,7 @@ function App() {
   const [success, setSuccess] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   function handleOpenPopup(popup) {
     setPopup(popup);
@@ -60,7 +63,23 @@ function App() {
   });
 
   useEffect(() => {
-    getOrders();
+    const jwt = getToken();
+
+    if (!jwt) {
+      return;
+    }
+
+    tokenValidation(jwt)
+      .then((res) => {
+        setIsLoggedIn(true);
+        setCurrentUser(res.data);
+        getOrders();
+      })
+      .catch((err) => {
+        console.log(err);
+        removeToken();
+        setIsLoggedIn(false);
+      });
   }, []);
 
   const canceledOrders = orders.filter(
@@ -84,6 +103,8 @@ function App() {
           setIsOpen,
           errorMessage,
           setErrorMessage,
+          isLoggedIn,
+          setIsLoggedIn,
         }}
       >
         <ProductsContext.Provider

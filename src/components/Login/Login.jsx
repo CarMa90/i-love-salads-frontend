@@ -5,6 +5,7 @@ import { authorize } from "../../utils/auth";
 import { useContext } from "react";
 import { UserContext } from "../../contexts/UserContext";
 import InfoTooltip from "../InfoTooltip/InfoTooltip";
+import { setToken } from "../../utils/token";
 
 function Login() {
   const { setIsOpen, setSuccess, setErrorMessage } = useContext(UserContext);
@@ -56,7 +57,9 @@ function Login() {
     }
 
     authorize(data)
-      .then((res) => console.log(res))
+      .then((res) => {
+        setToken(res.token);
+      })
       .catch((err) => {
         setIsOpen(true);
         setSuccess(false);

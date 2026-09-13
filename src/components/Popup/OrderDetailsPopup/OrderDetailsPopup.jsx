@@ -13,8 +13,11 @@ function OrderDetailsPopup({ order }) {
   const reactToPrintFn = useReactToPrint({ contentRef });
 
   function sendMessage(mobile) {
-    const url = `https://api.whatsapp.com/send/?phone=${mobile}`;
-
+    const whatsappPhone = `${mobile.countryCode}${mobile.phone}`.replace(
+      /\D/g,
+      "",
+    );
+    const url = `https://api.whatsapp.com/send/?phone=${whatsappPhone}`;
     window.open(url, "_blank");
   }
 
@@ -30,7 +33,9 @@ function OrderDetailsPopup({ order }) {
         <p className="popup-details__order-number">No. {order._id}</p>
         <p className="popup-details__subtext">Cliente</p>
         <p className="popup-details__order-client">{order.client}</p>
-        <p className="popup-details__order-mobile">{order.mobile.slice(-10)}</p>
+        <p className="popup-details__order-mobile">
+          {order.mobile.phone.slice(-10)}
+        </p>
       </div>
       <h3 className="popup-details__title">Detalles del pedido</h3>
       <ul className="popup-details__order-list">
