@@ -2,8 +2,12 @@ import "./Login.css";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { authorize } from "../../utils/auth";
+import { useContext } from "react";
+import { UserContext } from "../../contexts/UserContext";
+import InfoTooltip from "../InfoTooltip/InfoTooltip";
 
 function Login() {
+  const { setIsOpen, setSuccess, setErrorMessage } = useContext(UserContext);
   const [data, setData] = useState({
     email: "",
     password: "",
@@ -51,15 +55,18 @@ function Login() {
       return;
     }
 
-    console.log(data);
-
     authorize(data)
       .then((res) => console.log(res))
-      .catch((err) => console.log(err.message));
+      .catch((err) => {
+        setIsOpen(true);
+        setSuccess(false);
+        setErrorMessage(err.message);
+      });
   };
 
   return (
     <>
+      <InfoTooltip />
       <div className="login">
         <div className="login__content">
           <h3 className="login__title">Iniciar sesión</h3>
