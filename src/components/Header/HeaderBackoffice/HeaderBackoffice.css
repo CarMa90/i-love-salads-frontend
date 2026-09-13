@@ -1,0 +1,20 @@
+.header-backoffice__button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  color: var(--primary-red);
+  font-size: var(--step-0);
+  border: thin solid var(--ligth-red);
+  background-color: var(--ligth-red);
+  border-radius: 20px;
+  padding: 10px;
+  cursor: pointer;
+  transition: all 0.4s ease;
+}
+
+.header-backoffice__button:hover {
+  color: var(--white);
+  border-color: var(--primary-red);
+  background-color: var(--primary-red);
+}

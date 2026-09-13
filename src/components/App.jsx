@@ -19,6 +19,8 @@ import Register from "./Register/Register";
 import Login from "./Login/Login";
 import { getToken, removeToken } from "../utils/token";
 import { tokenValidation } from "../utils/auth";
+import ProtectedRoute from "./ProtectedRoute/ProtectedRoute";
+import HeaderBackoffice from "./Header/HeaderBackoffice/HeaderBackoffice";
 
 function App() {
   const [popup, setPopup] = useState(null);
@@ -115,6 +117,7 @@ function App() {
           setErrorMessage,
           isLoggedIn,
           setIsLoggedIn,
+          handleClosePopup,
         }}
       >
         <ProductsContext.Provider
@@ -138,18 +141,22 @@ function App() {
                 path="/"
                 element={
                   <>
-                    <Header secondaryComponent={<HeaderClient />}>
-                      <Navigation />
-                    </Header>
-                    <ProductSection />
-                    <Footer />
-                    {loader && <Loader />}
-                    {popup && <Popup onClose={handleClosePopup}>{popup}</Popup>}
-                    {canceledOrders.length > 0 && (
-                      <Popup onClose={handleClosePopup}>
-                        <CanceledOrdersPopup />
-                      </Popup>
-                    )}
+                    <ProtectedRoute allowedRoles={["client"]}>
+                      <Header secondaryComponent={<HeaderClient />}>
+                        <Navigation />
+                      </Header>
+                      <ProductSection />
+                      <Footer />
+                      {loader && <Loader />}
+                      {popup && (
+                        <Popup onClose={handleClosePopup}>{popup}</Popup>
+                      )}
+                      {canceledOrders.length > 0 && (
+                        <Popup onClose={handleClosePopup}>
+                          <CanceledOrdersPopup />
+                        </Popup>
+                      )}
+                    </ProtectedRoute>
                   </>
                 }
               />
@@ -157,11 +164,15 @@ function App() {
                 path="/backoffice"
                 element={
                   <>
-                    <Header />
-                    <OrdersTable />
-                    <Footer />
-                    {popup && <Popup onClose={handleClosePopup}>{popup}</Popup>}
-                    {loader && <Loader />}
+                    <ProtectedRoute allowedRoles={["admin", "restaurant"]}>
+                      <Header secondaryComponent={<HeaderBackoffice />} />
+                      <OrdersTable />
+                      <Footer />
+                      {popup && (
+                        <Popup onClose={handleClosePopup}>{popup}</Popup>
+                      )}
+                      {loader && <Loader />}
+                    </ProtectedRoute>
                   </>
                 }
               />
@@ -169,11 +180,14 @@ function App() {
                 path="/signup"
                 element={
                   <>
-                    <Header />
-                    <Register />
-                    <Footer />
-                    {popup && <Popup onClose={handleClosePopup}>{popup}</Popup>}
-                    {loader && <Loader />}
+                    <ProtectedRoute anonymous>
+                      <Header />
+                      <Register />
+                      <Footer />
+                      {popup && (
+                        <Popup onClose={handleClosePopup}>{popup}</Popup>
+                      )}
+                    </ProtectedRoute>
                   </>
                 }
               />
@@ -181,11 +195,14 @@ function App() {
                 path="/signin"
                 element={
                   <>
-                    <Header />
-                    <Login />
-                    <Footer />
-                    {popup && <Popup onClose={handleClosePopup}>{popup}</Popup>}
-                    {loader && <Loader />}
+                    <ProtectedRoute anonymous>
+                      <Header />
+                      <Login />
+                      <Footer />
+                      {popup && (
+                        <Popup onClose={handleClosePopup}>{popup}</Popup>
+                      )}
+                    </ProtectedRoute>
                   </>
                 }
               />

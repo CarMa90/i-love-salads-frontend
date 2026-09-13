@@ -4,10 +4,14 @@ import { useContext } from "react";
 import { UserContext } from "../../../contexts/UserContext";
 import { ProductsContext } from "../../../contexts/ProductsContext";
 import { LogOut, Handbag } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { removeToken } from "../../../utils/token";
 
 function UserInfoPopup() {
-  const { currentUser } = useContext(UserContext);
+  const { currentUser, setCurrentUser, setIsLoggedIn, handleClosePopup } =
+    useContext(UserContext);
   const { orders } = useContext(ProductsContext);
+  const navigate = useNavigate();
 
   const pendingOrders = orders.filter(
     (order) =>
@@ -15,6 +19,14 @@ function UserInfoPopup() {
       order.status !== "Entregado" &&
       order.status !== "Cancelado",
   );
+
+  const handleLogOut = () => {
+    handleClosePopup();
+    setCurrentUser({});
+    removeToken();
+    setIsLoggedIn(false);
+    navigate("/signin");
+  };
 
   return (
     <>
@@ -53,11 +65,11 @@ function UserInfoPopup() {
           })}
         </ul>
       </div>
-      {/* <div className="popup__user-buttons">
-        <button className="popup__user-logout-btn">
+      <div className="popup__user-buttons">
+        <button className="popup__user-logout-btn" onClick={handleLogOut}>
           <LogOut /> <span>Cerrar sesión</span>
         </button>
-      </div> */}
+      </div>
     </>
   );
 }
