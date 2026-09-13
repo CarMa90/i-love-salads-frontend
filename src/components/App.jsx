@@ -5,7 +5,7 @@ import { ProductsContext } from "../contexts/ProductsContext";
 import { UserContext } from "../contexts/UserContext";
 import ProductSection from "./ProductSection/ProductSection";
 import { useState, useEffect } from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
 import Popup from "./Popup/Popup";
 import Footer from "./Footer/Footer";
 import OrdersTable from "./OrdersTable/OrdersTable";
@@ -27,6 +27,7 @@ function App() {
   const [isOpen, setIsOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const navigate = useNavigate();
 
   function handleOpenPopup(popup) {
     setPopup(popup);
@@ -66,6 +67,7 @@ function App() {
     const jwt = getToken();
 
     if (!jwt) {
+      getOrders();
       return;
     }
 
@@ -73,6 +75,14 @@ function App() {
       .then((res) => {
         setIsLoggedIn(true);
         setCurrentUser(res.data);
+        if (
+          res.data.userType === "admin" ||
+          res.data.userType === "restaurant"
+        ) {
+          navigate("/backoffice");
+        } else if (res.data.userType === "client") {
+          navigate("/");
+        }
         getOrders();
       })
       .catch((err) => {

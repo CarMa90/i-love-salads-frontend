@@ -1,14 +1,21 @@
 import "./Login.css";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { authorize } from "../../utils/auth";
 import { useContext } from "react";
 import { UserContext } from "../../contexts/UserContext";
 import InfoTooltip from "../InfoTooltip/InfoTooltip";
 import { setToken } from "../../utils/token";
+import { mainApi } from "../../utils/MainApi";
 
 function Login() {
-  const { setIsOpen, setSuccess, setErrorMessage } = useContext(UserContext);
+  const {
+    setIsOpen,
+    setSuccess,
+    setErrorMessage,
+    setIsLoggedIn,
+    setCurrentUser,
+  } = useContext(UserContext);
   const [data, setData] = useState({
     email: "",
     password: "",
@@ -49,6 +56,8 @@ function Login() {
     return Object.keys(newErrors).length === 0;
   };
 
+  const navigate = useNavigate();
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -57,8 +66,20 @@ function Login() {
     }
 
     authorize(data)
-      .then((res) => {
+      .then(async (res) => {
         setToken(res.token);
+        setIsLoggedIn(true);
+        const userInfoRes = await mainApi.getUserInfo();
+        const userData = userInfoRes.data;
+        setCurrentUser(userData);
+        if (
+          userData.userType === "admin" ||
+          userData.userType === "restaurant"
+        ) {
+          navigate("/backoffice");
+        } else if (userData.userType === "client") {
+          navigate("/");
+        }
       })
       .catch((err) => {
         setIsOpen(true);

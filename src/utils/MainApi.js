@@ -7,8 +7,24 @@ class Api {
     this.headers = options.headers;
   }
 
-  printUrl() {
-    console.log(this.url);
+  getHeaders() {
+    const token = getToken();
+
+    return {
+      ...this.headers,
+      Authorization: `Bearer ${token}`,
+    };
+  }
+
+  getUserInfo() {
+    return fetch(`${this.url}/users/me`, { headers: this.getHeaders() }).then(
+      (res) => {
+        if (res.ok) {
+          return res.json();
+        }
+        return Promise.reject(`Error: ${res.status}`);
+      },
+    );
   }
 }
 
