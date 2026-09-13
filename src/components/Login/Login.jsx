@@ -3,7 +3,6 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { authorize } from "../../utils/auth";
 import { useContext } from "react";
-import { ProductsContext } from "../../contexts/ProductsContext";
 import { UserContext } from "../../contexts/UserContext";
 import InfoTooltip from "../InfoTooltip/InfoTooltip";
 import { setToken } from "../../utils/token";
@@ -17,8 +16,6 @@ function Login() {
     setIsLoggedIn,
     setCurrentUser,
   } = useContext(UserContext);
-
-  const { setLoader } = useContext(ProductsContext);
 
   const [data, setData] = useState({
     email: "",
