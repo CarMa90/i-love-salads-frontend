@@ -1,5 +1,4 @@
 import "./Login.css";
-import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { authorize } from "../../utils/auth";
 import { useContext } from "react";
@@ -7,6 +6,7 @@ import { UserContext } from "../../contexts/UserContext";
 import InfoTooltip from "../InfoTooltip/InfoTooltip";
 import { setToken } from "../../utils/token";
 import { mainApi } from "../../utils/MainApi";
+import { useFormAndValidation } from "../../hooks/useFormAndValidations";
 
 function Login() {
   const {
@@ -17,56 +17,19 @@ function Login() {
     setCurrentUser,
   } = useContext(UserContext);
 
-  const [data, setData] = useState({
+  const { values, handleChange, errors, isValid } = useFormAndValidation({
     email: "",
     password: "",
   });
-
-  const [errors, setErrors] = useState({});
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-
-    if (errors[name]) {
-      setErrors((prevErrors) => ({
-        ...prevErrors,
-        [name]: "",
-      }));
-    }
-
-    setData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
-
-  const validateForm = () => {
-    const newErrors = {};
-
-    if (!data.email.trim()) {
-      newErrors.email = "El correo electrónico es requerido";
-    }
-    if (!data.password) {
-      newErrors.password = "La contraseña es requerida";
-    } else if (data.password.length < 8) {
-      newErrors.password = "La contraseña debe tener al menos 8 caracteres";
-    }
-
-    setErrors(newErrors);
-
-    return Object.keys(newErrors).length === 0;
-  };
 
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!validateForm()) {
-      return;
-    }
+    if (!isValid) return;
 
-    authorize(data)
+    authorize(values)
       .then(async (res) => {
         setToken(res.token);
         setIsLoggedIn(true);
@@ -112,7 +75,7 @@ function Login() {
                 placeholder="Correo electrónico"
                 type="email"
                 required
-                value={data.email}
+                value={values.email || ""}
                 onChange={handleChange}
               />
               <span className="login__error-message email-error-message">
@@ -132,14 +95,20 @@ function Login() {
                 minLength={8}
                 maxLength={12}
                 required
-                value={data.password}
+                pattern={/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/}
+                title="El password debe contener al menos una mayúscula, una minúscula, un número y un caracter especial"
+                value={values.password || ""}
                 onChange={handleChange}
               />
               <span className="login__error-message password-error-message">
                 {errors.password}
               </span>
             </div>
-            <button className="button login__button" type="submit">
+            <button
+              className="button login__button"
+              type="submit"
+              disabled={!isValid}
+            >
               Iniciar sesión
             </button>
             <p className="login__paragraph">

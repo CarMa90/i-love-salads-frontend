@@ -24,6 +24,13 @@
   background-color: var(--dark-green);
 }
 
+.login__button:disabled {
+  color: var(--ligth-gray);
+  background-color: var(--white);
+  border: solid thin var(--ligth-gray);
+  cursor: not-allowed;
+}
+
 .login__content {
   width: 95%;
   max-width: 430px;

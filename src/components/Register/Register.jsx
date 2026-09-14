@@ -1,84 +1,31 @@
 import "./Register.css";
-import { useState } from "react";
 import { register } from "../../utils/auth";
 import { COUNTRIES } from "../../constants/index";
 import InfoTooltip from "../InfoTooltip/InfoTooltip";
 import { useContext } from "react";
 import { UserContext } from "../../contexts/UserContext";
 import { Link } from "react-router-dom";
+import { useFormAndValidation } from "../../hooks/useFormAndValidations";
 
 function Register() {
   const { setIsOpen, setSuccess, setErrorMessage } = useContext(UserContext);
-  const [data, setData] = useState({
+
+  const { values, handleChange, errors, isValid } = useFormAndValidation({
     email: "",
-    password: "",
     name: "",
     mobile: { countryCode: "", phone: "" },
+    password: "",
   });
-
-  const [errors, setErrors] = useState({});
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-
-    if (errors[name]) {
-      setErrors((prevErrors) => ({
-        ...prevErrors,
-        [name]: "",
-      }));
-    }
-
-    if (name === "countryCode" || name === "phone") {
-      setData((prevData) => ({
-        ...prevData,
-        mobile: {
-          ...prevData.mobile,
-          [name]: value,
-        },
-      }));
-    } else {
-      setData((prevData) => ({
-        ...prevData,
-        [name]: value,
-      }));
-    }
-  };
-
-  const validateForm = () => {
-    const newErrors = {};
-
-    if (!data.email.trim()) {
-      newErrors.email = "El correo electrónico es requerido";
-    }
-    if (!data.name.trim()) {
-      newErrors.name = "El nombre es requerido";
-    }
-    if (!data.mobile.countryCode) {
-      newErrors.countryCode = "Selecciona un país";
-    }
-    if (!data.mobile.phone.trim()) {
-      newErrors.phone = "El número de celular es requerido";
-    }
-    if (!data.password) {
-      newErrors.password = "La contraseña es requerida";
-    } else if (data.password.length < 8) {
-      newErrors.password = "La contraseña debe tener al menos 8 caracteres";
-    }
-
-    setErrors(newErrors);
-
-    return Object.keys(newErrors).length === 0;
-  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!validateForm()) {
+    if (!isValid) {
       return;
     }
 
-    console.log(data);
-    register(data)
+    console.log(values);
+    register(values)
       .then(() => {
         console.log("registro exitoso");
         setIsOpen(true);
@@ -114,7 +61,7 @@ function Register() {
                 placeholder="Correo electrónico"
                 type="email"
                 required
-                value={data.email}
+                value={values.email || ""}
                 onChange={handleChange}
               />
               <span className="register__error-message email-error-message">
@@ -132,7 +79,7 @@ function Register() {
                 placeholder="Nombre"
                 type="text"
                 required
-                value={data.name}
+                value={values.name || ""}
                 onChange={handleChange}
               />
               <span className="register__error-message name-error-message">
@@ -146,9 +93,10 @@ function Register() {
                     País
                   </label>
                   <select
-                    name="countryCode"
+                    name="mobile.countryCode"
                     id="countryCode"
-                    value={data.mobile.countryCode}
+                    required
+                    value={values.mobile?.countryCode || ""}
                     onChange={handleChange}
                     className="register__input register__input_type_country-code"
                   >
@@ -171,17 +119,17 @@ function Register() {
                   <input
                     className="register__input register__input_type_phone"
                     id="phone"
-                    name="phone"
+                    name="mobile.phone"
                     placeholder="Celular"
-                    type="text"
+                    type="tel"
                     required
-                    value={data.mobile.phone}
+                    value={values.mobile?.phone || ""}
                     onChange={handleChange}
                   />
                 </div>
               </div>
               <span className="register__error-message mobile-error-message">
-                {errors.phone}
+                {errors["mobile.countryCode"] || errors["mobile.phone"]}
               </span>
             </div>
             <div className="register__label-input">
@@ -197,14 +145,20 @@ function Register() {
                 minLength={8}
                 maxLength={12}
                 required
-                value={data.password}
+                pattern={/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/}
+                title="El password debe contener al menos una mayúscula, una minúscula, un número y un caracter especial"
+                value={values.password || ""}
                 onChange={handleChange}
               />
               <span className="register__error-message password-error-message">
                 {errors.password}
               </span>
             </div>
-            <button className="button register__button" type="submit">
+            <button
+              className="button register__button"
+              type="submit"
+              disabled={!isValid}
+            >
               Regístrate
             </button>
             <p className="register__paragraph">
