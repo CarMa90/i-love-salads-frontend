@@ -17,6 +17,7 @@
 .popup-canceled__item > div {
   display: flex;
   justify-content: start;
+  align-items: center;
   gap: 5px;
 }
 

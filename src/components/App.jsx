@@ -10,7 +10,6 @@ import Popup from "./Popup/Popup";
 import Footer from "./Footer/Footer";
 import OrdersTable from "./OrdersTable/OrdersTable";
 import HeaderClient from "./Header/HeaderClient/HeaderClient";
-import { api } from "../utils/api";
 import CanceledOrdersPopup from "./Popup/CanceledOrdersPopup/CanceledOrdersPopup";
 import Loader from "./Loader/Loader";
 import ErrorPopup from "./Popup/ErrorPopup/ErrorPopup";
@@ -21,14 +20,15 @@ import { getToken, removeToken } from "../utils/token";
 import { tokenValidation } from "../utils/auth";
 import ProtectedRoute from "./ProtectedRoute/ProtectedRoute";
 import HeaderBackoffice from "./Header/HeaderBackoffice/HeaderBackoffice";
+import { mainApi } from "../utils/MainApi";
 
 function App() {
   const [popup, setPopup] = useState(null);
-  const [loader, setLoader] = useState(true);
+  const [loader, setLoader] = useState(() => Boolean(getToken()));
   const [success, setSuccess] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(() => Boolean(getToken()));
   const navigate = useNavigate();
 
   function handleOpenPopup(popup) {
@@ -42,34 +42,28 @@ function App() {
   const [orders, setOrders] = useState([]);
 
   const getOrders = async () => {
-    await api
+    await mainApi
       .getOrders()
       .then((data) => {
-        setOrders(data.slice().reverse());
+        // console.log(data);
+        setOrders(data.data.slice().reverse());
         setLoader(false);
         // console.log("DATA DE API:", data);
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
         setLoader(false);
         handleOpenPopup(<ErrorPopup error={err} />);
       });
   };
 
   const [cartItems, setCartItems] = useState([]);
-  const [currentUser, setCurrentUser] = useState({
-    _id: "64a2b9f1e4b0c8a1b2c3d4e5",
-    name: "Carlos",
-    email: "ejemplo@email.com",
-    type: "client",
-    mobile: "522581067042",
-  });
+  const [currentUser, setCurrentUser] = useState({});
 
   useEffect(() => {
     const jwt = getToken();
 
     if (!jwt) {
-      getOrders();
       return;
     }
 
@@ -87,8 +81,8 @@ function App() {
         }
         getOrders();
       })
-      .catch((err) => {
-        console.log(err);
+      .catch(() => {
+        // console.log(err);
         removeToken();
         setIsLoggedIn(false);
       });
@@ -96,7 +90,7 @@ function App() {
 
   const canceledOrders = orders.filter(
     (order) =>
-      order.clientId === currentUser._id &&
+      order.client._id === currentUser._id &&
       order.status === "Cancelado" &&
       !order.cancelAcceptance,
   );

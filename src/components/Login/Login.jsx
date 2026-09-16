@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { authorize } from "../../utils/auth";
 import { useContext } from "react";
 import { UserContext } from "../../contexts/UserContext";
+import { ProductsContext } from "../../contexts/ProductsContext";
 import InfoTooltip from "../InfoTooltip/InfoTooltip";
 import { setToken } from "../../utils/token";
 import { mainApi } from "../../utils/MainApi";
@@ -16,6 +17,8 @@ function Login() {
     setIsLoggedIn,
     setCurrentUser,
   } = useContext(UserContext);
+
+  const { getOrders } = useContext(ProductsContext);
 
   const { values, handleChange, errors, isValid } = useFormAndValidation({
     email: "",
@@ -44,6 +47,7 @@ function Login() {
         } else if (userData.userType === "client") {
           navigate("/");
         }
+        getOrders();
       })
       .catch((err) => {
         setIsOpen(true);
@@ -95,9 +99,7 @@ function Login() {
                 minLength={8}
                 maxLength={12}
                 required
-                pattern={
-                  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>]).{8,}$/
-                }
+                pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?':{}|<>_\-]).{8,}"
                 title="El password debe contener al menos una mayúscula, una minúscula, un número y un caracter especial"
                 value={values.password || ""}
                 onChange={handleChange}

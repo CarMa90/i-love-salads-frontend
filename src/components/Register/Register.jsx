@@ -24,10 +24,10 @@ function Register() {
       return;
     }
 
-    console.log(values);
+    // console.log(values);
     register(values)
       .then(() => {
-        console.log("registro exitoso");
+        // console.log("registro exitoso");
         setIsOpen(true);
         setSuccess(true);
       })
@@ -145,9 +145,7 @@ function Register() {
                 minLength={8}
                 maxLength={12}
                 required
-                pattern={
-                  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>]).{8,}$/
-                }
+                pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?':{}|<>_\-]).{8,}"
                 title="El password debe contener al menos una mayúscula, una minúscula, un número y un caracter especial"
                 value={values.password || ""}
                 onChange={handleChange}

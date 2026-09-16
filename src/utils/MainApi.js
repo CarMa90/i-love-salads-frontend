@@ -22,9 +22,77 @@ class Api {
         if (res.ok) {
           return res.json();
         }
-        return Promise.reject(`Error: ${res.status}`);
+        return res.json().then((err) => Promise.reject(err));
       },
     );
+  }
+
+  createOrder(data) {
+    return fetch(`${this.url}/orders`, {
+      headers: this.getHeaders(),
+      method: "POST",
+      body: JSON.stringify(data),
+    }).then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+
+      return res.json().then((err) => Promise.reject(err));
+    });
+  }
+
+  getOrders() {
+    // console.log(this.headers);
+    return fetch(`${this.url}/orders`, { headers: this.getHeaders() }).then(
+      (res) => {
+        if (res.ok) {
+          return res.json();
+        }
+
+        return res.json().then((err) => Promise.reject(err));
+      },
+    );
+  }
+
+  changeOrderStatus(data) {
+    return fetch(`${this.url}/orders/${data._id}/status`, {
+      headers: this.getHeaders(),
+      body: JSON.stringify({ status: data.status }),
+      method: "PUT",
+    }).then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+
+      return res.json().then((err) => Promise.reject(err));
+    });
+  }
+
+  cancelOrder(data) {
+    return fetch(`${this.url}/orders/${data._id}/cancel`, {
+      headers: this.getHeaders(),
+      method: "PUT",
+      body: JSON.stringify({ message: data.message }),
+    }).then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+
+      return res.json().then((err) => Promise.reject(err));
+    });
+  }
+
+  acceptCancelation(data) {
+    return fetch(`${this.url}/orders/${data}/cancel/acceptance`, {
+      headers: this.getHeaders(),
+      method: "PUT",
+    }).then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+
+      return res.json().then((err) => Promise.reject(err));
+    });
   }
 }
 

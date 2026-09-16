@@ -1,11 +1,10 @@
 import "./CartPopup.css";
 import { useContext, useState } from "react";
 import { ProductsContext } from "../../../contexts/ProductsContext";
-import { UserContext } from "../../../contexts/UserContext";
 import UserInfoPopup from "../UserInfoPopup/UserInfoPopup";
-import { api } from "../../../utils/api";
 import { ShoppingCart, ArrowRight, Trash2 } from "lucide-react";
 import ErrorPopup from "../ErrorPopup/ErrorPopup";
+import { mainApi } from "../../../utils/MainApi";
 
 function CartPopup() {
   const {
@@ -16,7 +15,6 @@ function CartPopup() {
     getOrders,
     setLoader,
   } = useContext(ProductsContext);
-  const { currentUser } = useContext(UserContext);
   const userInfoPopup = <UserInfoPopup />;
 
   const cartTotal = cartItems.reduce((acumulador, itemActual) => {
@@ -39,6 +37,15 @@ function CartPopup() {
 
   const [emptyCart, setEmptyCart] = useState(false);
 
+  const productsToOrder = cartItems.map((item) => {
+    return {
+      name: item.name,
+      price: item.price,
+      quantity: item.quantity,
+      _id: item._id,
+    };
+  });
+
   function handleOrder(items) {
     if (items.length === 0) {
       setEmptyCart(() => {
@@ -49,24 +56,12 @@ function CartPopup() {
 
     setLoader(true);
 
-    const timestamp = Date.now();
+    // console.log(items);
 
     (async () => {
-      api
-        .getNewOrder({
+      mainApi
+        .createOrder({
           products: items,
-          client: currentUser.name,
-          clientId: currentUser._id,
-          mobile: currentUser.mobile,
-          date: new Date(timestamp).toLocaleDateString("es-MX"),
-          time: (() => {
-            const date = new Date(timestamp);
-            const horas = String(date.getHours()).padStart(2, "0");
-            const minutos = String(date.getMinutes()).padStart(2, "0");
-            return `${horas}:${minutos}`;
-          })(),
-          status: "Enviado",
-          cancelMessage: "",
         })
         .then(async () => {
           setCartItems([]);
@@ -75,7 +70,7 @@ function CartPopup() {
           handleOpenPopup(userInfoPopup);
         })
         .catch((err) => {
-          console.log(err);
+          // console.log(err);
           handleOpenPopup(<ErrorPopup error={err} />);
         })
         .finally(() => {
@@ -143,7 +138,7 @@ function CartPopup() {
         <button
           className="popup__cart-button"
           onClick={() => {
-            handleOrder(cartItems);
+            handleOrder(productsToOrder);
           }}
         >
           <span>Ordenar</span>

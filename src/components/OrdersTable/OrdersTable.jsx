@@ -2,7 +2,7 @@ import "./OrdersTable.css";
 import { useContext } from "react";
 import { ProductsContext } from "../../contexts/ProductsContext";
 import OrderDetailsPopup from "../Popup/OrderDetailsPopup/OrderDetailsPopup";
-import { api } from "../../utils/api";
+import { mainApi } from "../../utils/MainApi";
 import ErrorPopup from "../Popup/ErrorPopup/ErrorPopup";
 
 function OrdersTable() {
@@ -23,11 +23,11 @@ function OrdersTable() {
 
     setLoader(true);
 
-    api
+    mainApi
       .changeOrderStatus({ _id: order._id, status: newStatus })
       .then(() => getOrders())
       .catch((err) => {
-        console.log(err);
+        // console.log(err, err.message);
         handleOpenPopup(<ErrorPopup error={err} />);
       })
       .finally(() => setLoader(false));
@@ -75,7 +75,7 @@ function OrdersTable() {
                           ? "Entregado"
                           : "Cancelado"}
                 </td>
-                <td className="orders-table__cell">{order.client}</td>
+                <td className="orders-table__cell">{order.client.name}</td>
                 <td
                   className="orders-table__cell orders-table__details-cell"
                   onClick={() => {
@@ -85,15 +85,10 @@ function OrdersTable() {
                   Detalles
                 </td>
                 <td className="orders-table__cell">
-                  $
-                  {order.products.reduce(
-                    (accumulator, item) =>
-                      accumulator + item.price * item.quantity,
-                    0,
-                  )}
+                  ${order.totalAmount}
                   mxn
                 </td>
-                <td className="orders-table__cell">{order._id}</td>
+                <td className="orders-table__cell">{order.orderNumber}</td>
               </tr>
             ))}
           </tbody>
