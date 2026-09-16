@@ -99,7 +99,7 @@ function Login() {
                 minLength={8}
                 maxLength={12}
                 required
-                pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?':{}|<>_\-]).{8,}"
+                pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[-!@#$%^&*(),.?':{}|<>_]).{8,}"
                 title="El password debe contener al menos una mayúscula, una minúscula, un número y un caracter especial"
                 value={values.password || ""}
                 onChange={handleChange}
