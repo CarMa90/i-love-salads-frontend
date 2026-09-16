@@ -21,6 +21,7 @@ import { tokenValidation } from "../utils/auth";
 import ProtectedRoute from "./ProtectedRoute/ProtectedRoute";
 import HeaderBackoffice from "./Header/HeaderBackoffice/HeaderBackoffice";
 import { mainApi } from "../utils/MainApi";
+import RestaurantRegister from "./RestaurantRegister/RestaurantRegister";
 
 function App() {
   const [popup, setPopup] = useState(null);
@@ -177,6 +178,21 @@ function App() {
                     <ProtectedRoute anonymous>
                       <Header />
                       <Register />
+                      <Footer />
+                      {popup && (
+                        <Popup onClose={handleClosePopup}>{popup}</Popup>
+                      )}
+                    </ProtectedRoute>
+                  </>
+                }
+              />
+              <Route
+                path="/restaurant/signup"
+                element={
+                  <>
+                    <ProtectedRoute anonymous>
+                      <Header />
+                      <RestaurantRegister />
                       <Footer />
                       {popup && (
                         <Popup onClose={handleClosePopup}>{popup}</Popup>

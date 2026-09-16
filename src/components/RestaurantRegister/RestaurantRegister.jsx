@@ -1,4 +1,4 @@
-import "./Register.css";
+import "./RestaurantRegister.css";
 import { register } from "../../utils/auth";
 import { COUNTRIES } from "../../constants/index";
 import InfoTooltip from "../InfoTooltip/InfoTooltip";
@@ -7,7 +7,7 @@ import { UserContext } from "../../contexts/UserContext";
 import { Link } from "react-router-dom";
 import { useFormAndValidation } from "../../hooks/useFormAndValidations";
 
-function Register() {
+function RestaurantRegister() {
   const { setIsOpen, setSuccess, setErrorMessage } = useContext(UserContext);
 
   const { values, handleChange, errors, isValid } = useFormAndValidation({
@@ -25,7 +25,7 @@ function Register() {
     }
 
     // console.log(values);
-    register(values)
+    register({ ...values, userType: "admin" })
       .then(() => {
         // console.log("registro exitoso");
         setIsOpen(true);
@@ -43,7 +43,7 @@ function Register() {
       <InfoTooltip />
       <div className="register">
         <div className="register__content">
-          <h3 className="register__title">Regístrate</h3>
+          <h3 className="register__title">Regístra tu restaurante</h3>
           <form
             className="register__form"
             autoComplete="off"
@@ -162,10 +162,6 @@ function Register() {
               Regístrate
             </button>
             <p className="register__paragraph">
-              Quieres registrar un restaurante{" "}
-              <Link to="/restaurant/signup">registralo aquí</Link>
-            </p>
-            <p className="register__paragraph">
               Ya tienes una cuenta con nosotros{" "}
               <Link to="/signin">inicia sesión</Link>
             </p>
@@ -176,4 +172,4 @@ function Register() {
   );
 }
 
-export default Register;
+export default RestaurantRegister;
