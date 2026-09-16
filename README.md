@@ -4,8 +4,10 @@ Plataforma moderna para realizar pedidos online de ensaladas, baguettes, sopas y
 
 ## 🌐 Proyecto desplegado
 
-- [Aplicación principal](https://CarMa90.github.io/i-love-salads-frontend)
-- [Backoffice](https://CarMa90.github.io/i-love-salads-frontend/backoffice)
+- [Aplicación principal](https://ilovesalads.heise.cl)
+- [Backoffice](https://ilovesalads.heise.cl/backoffice)
+
+La aplicación está disponible públicamente en internet y conectada a un backend remoto para gestionar productos, usuarios y órdenes.
 
 ## ✨ Características
 
@@ -98,7 +100,7 @@ src/
 
 ## 🔗 API
 
-La aplicación se conecta a una API backend para:
+La aplicación está conectada a un backend remoto para:
 
 - Obtener lista de órdenes
 - Crear nuevas órdenes
