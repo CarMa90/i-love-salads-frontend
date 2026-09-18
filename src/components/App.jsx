@@ -22,6 +22,7 @@ import ProtectedRoute from "./ProtectedRoute/ProtectedRoute";
 import HeaderBackoffice from "./Header/HeaderBackoffice/HeaderBackoffice";
 import { mainApi } from "../utils/MainApi";
 import RestaurantRegister from "./RestaurantRegister/RestaurantRegister";
+import { getCartItems, setCartItemsToLocalStorage } from "../utils/cartItems";
 
 function App() {
   const [popup, setPopup] = useState(null);
@@ -31,6 +32,18 @@ function App() {
   const [errorMessage, setErrorMessage] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(() => Boolean(getToken()));
   const navigate = useNavigate();
+
+  function navigateToSignin() {
+    navigate("/signin");
+  }
+
+  function handleLogOut() {
+    handleClosePopup();
+    setCurrentUser({});
+    removeToken();
+    setIsLoggedIn(false);
+    navigate("/");
+  }
 
   function handleOpenPopup(popup) {
     setPopup(popup);
@@ -58,8 +71,22 @@ function App() {
       });
   };
 
-  const [cartItems, setCartItems] = useState([]);
+  const [cartItems, setCartItems] = useState(() => {
+    const cartItemsFromLocalStorage = getCartItems();
+    if (cartItemsFromLocalStorage) {
+      try {
+        return JSON.parse(cartItemsFromLocalStorage);
+      } catch {
+        return [];
+      }
+    }
+    return [];
+  });
   const [currentUser, setCurrentUser] = useState({});
+
+  useEffect(() => {
+    setCartItemsToLocalStorage(JSON.stringify(cartItems));
+  }, [cartItems]);
 
   useEffect(() => {
     const jwt = getToken();
@@ -113,6 +140,8 @@ function App() {
           isLoggedIn,
           setIsLoggedIn,
           handleClosePopup,
+          navigateToSignin,
+          handleLogOut,
         }}
       >
         <ProductsContext.Provider
@@ -136,7 +165,7 @@ function App() {
                 path="/"
                 element={
                   <>
-                    <ProtectedRoute allowedRoles={["client"]}>
+                    <ProtectedRoute anonymous allowedRoles={["client"]}>
                       <Header secondaryComponent={<HeaderClient />}>
                         <Navigation />
                       </Header>
@@ -175,13 +204,14 @@ function App() {
                 path="/signup"
                 element={
                   <>
-                    <ProtectedRoute anonymous>
+                    <ProtectedRoute anonymous exactAnonymous>
                       <Header />
                       <Register />
                       <Footer />
                       {popup && (
                         <Popup onClose={handleClosePopup}>{popup}</Popup>
                       )}
+                      {loader && <Loader />}
                     </ProtectedRoute>
                   </>
                 }
@@ -190,13 +220,14 @@ function App() {
                 path="/restaurant/signup"
                 element={
                   <>
-                    <ProtectedRoute anonymous>
+                    <ProtectedRoute anonymous exactAnonymous>
                       <Header />
                       <RestaurantRegister />
                       <Footer />
                       {popup && (
                         <Popup onClose={handleClosePopup}>{popup}</Popup>
                       )}
+                      {loader && <Loader />}
                     </ProtectedRoute>
                   </>
                 }
@@ -205,13 +236,14 @@ function App() {
                 path="/signin"
                 element={
                   <>
-                    <ProtectedRoute anonymous>
+                    <ProtectedRoute anonymous exactAnonymous>
                       <Header />
                       <Login />
                       <Footer />
                       {popup && (
                         <Popup onClose={handleClosePopup}>{popup}</Popup>
                       )}
+                      {loader && <Loader />}
                     </ProtectedRoute>
                   </>
                 }

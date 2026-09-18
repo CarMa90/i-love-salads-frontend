@@ -2,29 +2,37 @@ import { Navigate, useLocation } from "react-router-dom";
 import { useContext } from "react";
 import { UserContext } from "../../contexts/UserContext";
 
-function ProtectedRoute({ children, anonymous = false, allowedRoles = [] }) {
+function ProtectedRoute({
+  children,
+  anonymous = false,
+  exactAnonymous = false,
+  allowedRoles = [],
+}) {
   const location = useLocation();
-  const from = location.state?.from || "/";
   const { isLoggedIn, currentUser } = useContext(UserContext);
 
-  if (anonymous && isLoggedIn) {
-    return <Navigate to={from} />;
+  if (!isLoggedIn) {
+    if (anonymous) {
+      return children;
+    }
+    return <Navigate to="/signin" state={{ from: location }} replace />;
   }
 
-  if (!anonymous && !isLoggedIn) {
-    return <Navigate to="/signin" state={{ from: location }} />;
+  const userRole = currentUser?.userType;
+
+  if (exactAnonymous) {
+    if (userRole === "admin" || userRole === "restaurant") {
+      return <Navigate to="/backoffice" replace />;
+    }
+    return <Navigate to="/" replace />;
   }
 
-  if (!anonymous && allowedRoles.length > 0 && currentUser) {
-    const userRole = currentUser.userType;
-
+  if (allowedRoles.length > 0) {
     if (!allowedRoles.includes(userRole)) {
       if (userRole === "admin" || userRole === "restaurant") {
         return <Navigate to="/backoffice" replace />;
       }
-      if (userRole === "client") {
-        return <Navigate to="/" replace />;
-      }
+      return <Navigate to="/" replace />;
     }
   }
 

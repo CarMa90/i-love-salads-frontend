@@ -1,8 +1,9 @@
 import "./CartPopup.css";
 import { useContext, useState } from "react";
 import { ProductsContext } from "../../../contexts/ProductsContext";
+import { UserContext } from "../../../contexts/UserContext";
 import UserInfoPopup from "../UserInfoPopup/UserInfoPopup";
-import { ShoppingCart, ArrowRight, Trash2 } from "lucide-react";
+import { ShoppingCart, ArrowRight, Trash2, KeyRound } from "lucide-react";
 import ErrorPopup from "../ErrorPopup/ErrorPopup";
 import { mainApi } from "../../../utils/MainApi";
 
@@ -15,6 +16,13 @@ function CartPopup() {
     getOrders,
     setLoader,
   } = useContext(ProductsContext);
+
+  const { isLoggedIn, navigateToSignin } = useContext(UserContext);
+
+  function handleNavigateToSignin() {
+    navigateToSignin();
+  }
+
   const userInfoPopup = <UserInfoPopup />;
 
   const cartTotal = cartItems.reduce((acumulador, itemActual) => {
@@ -135,15 +143,24 @@ function CartPopup() {
           <Trash2 />
           <span>Borrar todo</span>
         </button>
-        <button
-          className="popup__cart-button"
-          onClick={() => {
-            handleOrder(productsToOrder);
-          }}
-        >
-          <span>Ordenar</span>
-          <ArrowRight />
-        </button>
+        {isLoggedIn ? (
+          <button
+            className="popup__cart-button"
+            onClick={() => {
+              handleOrder(productsToOrder);
+            }}
+          >
+            <span>Ordenar</span>
+            <ArrowRight />
+          </button>
+        ) : (
+          <button
+            className="popup__cart-button"
+            onClick={handleNavigateToSignin}
+          >
+            <KeyRound size={16} /> <span>Iniciar sesión</span>
+          </button>
+        )}
       </div>
     </>
   );

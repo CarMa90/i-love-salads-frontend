@@ -4,14 +4,10 @@ import { useContext } from "react";
 import { UserContext } from "../../../contexts/UserContext";
 import { ProductsContext } from "../../../contexts/ProductsContext";
 import { LogOut, Handbag } from "lucide-react";
-import { useNavigate } from "react-router-dom";
-import { removeToken } from "../../../utils/token";
 
 function UserInfoPopup() {
-  const { currentUser, setCurrentUser, setIsLoggedIn, handleClosePopup } =
-    useContext(UserContext);
+  const { currentUser, handleLogOut } = useContext(UserContext);
   const { orders } = useContext(ProductsContext);
-  const navigate = useNavigate();
 
   // console.log(orders);
 
@@ -23,14 +19,6 @@ function UserInfoPopup() {
   );
 
   // console.log(pendingOrders);
-
-  const handleLogOut = () => {
-    handleClosePopup();
-    setCurrentUser({});
-    removeToken();
-    setIsLoggedIn(false);
-    navigate("/signin");
-  };
 
   return (
     <>
