@@ -7,30 +7,32 @@ import { useReactToPrint } from "react-to-print";
 import ProductionOrder from "../../ProductionOrder/ProductionOrder";
 
 function OrderDetailsPopup({ order }) {
+  // console.log(order);
   const { handleOpenPopup } = useContext(ProductsContext);
 
   const contentRef = useRef(null);
   const reactToPrintFn = useReactToPrint({ contentRef });
 
   function sendMessage(mobile) {
-    const url = `https://api.whatsapp.com/send/?phone=${mobile}`;
-
+    const whatsappPhone = `${mobile.countryCode}${mobile.phone}`.replace(
+      /\D/g,
+      "",
+    );
+    const url = `https://api.whatsapp.com/send/?phone=${whatsappPhone}`;
     window.open(url, "_blank");
   }
-
-  const cartTotal = order.products.reduce((acumulator, itemActual) => {
-    return acumulator + itemActual.price * itemActual.quantity;
-  }, 0);
 
   return (
     <>
       <ProductionOrder contentRef={contentRef} order={order} />
       <div className="popup-details__header">
         <p className="popup-details__subtext">Pedido</p>
-        <p className="popup-details__order-number">No. {order._id}</p>
+        <p className="popup-details__order-number">No. {order.orderNumber}</p>
         <p className="popup-details__subtext">Cliente</p>
-        <p className="popup-details__order-client">{order.client}</p>
-        <p className="popup-details__order-mobile">{order.mobile.slice(-10)}</p>
+        <p className="popup-details__order-client">{order.client.name}</p>
+        <p className="popup-details__order-mobile">
+          {order.client.mobile.phone.slice(-10)}
+        </p>
       </div>
       <h3 className="popup-details__title">Detalles del pedido</h3>
       <ul className="popup-details__order-list">
@@ -47,7 +49,9 @@ function OrderDetailsPopup({ order }) {
       </ul>
       <div className="popup-details__total">
         <div className="popup-details__total-text">Total</div>
-        <div className="popup-details__total-number">$ {cartTotal} mxn</div>
+        <div className="popup-details__total-number">
+          $ {order.totalAmount} mxn
+        </div>
       </div>
       <div className="popup-details__buttons">
         <button
@@ -61,7 +65,7 @@ function OrderDetailsPopup({ order }) {
         <button
           className="popup-details__button popup-details__button-message"
           onClick={() => {
-            sendMessage(order.mobile);
+            sendMessage(order.client.mobile);
           }}
         >
           <MessageCircle />

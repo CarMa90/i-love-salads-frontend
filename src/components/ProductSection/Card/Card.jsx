@@ -38,9 +38,9 @@ function Card({ product }) {
     });
   }
 
-  const resultado = cartItems.find((item) => item._id === product._id);
+  const itemInCart = cartItems.find((item) => item._id === product._id);
 
-  const renderizar = resultado ? (
+  const cardButton = itemInCart ? (
     <>
       <button className="card__cart-button">
         <div
@@ -51,7 +51,7 @@ function Card({ product }) {
         >
           -
         </div>
-        <div>{resultado.quantity}</div>
+        <div>{itemInCart.quantity}</div>
         <div
           className="card__plus-btn"
           onClick={() => {
@@ -81,7 +81,7 @@ function Card({ product }) {
         <p className="card__description">{product.description}</p>
         <div>
           <p className="card__price">${product.price}mxn</p>
-          {renderizar}
+          {cardButton}
         </div>
       </div>
     </>

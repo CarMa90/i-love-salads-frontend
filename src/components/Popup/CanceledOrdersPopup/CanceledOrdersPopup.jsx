@@ -4,22 +4,31 @@ import { useContext } from "react";
 import { UserContext } from "../../../contexts/UserContext";
 import { ProductsContext } from "../../../contexts/ProductsContext";
 import { TicketX } from "lucide-react";
-import { api } from "../../../utils/api";
+import { mainApi } from "../../../utils/MainApi";
+import ErrorPopup from "../ErrorPopup/ErrorPopup";
 
 function CanceledOrdersPopup() {
   const { currentUser } = useContext(UserContext);
-  const { canceledOrders, getOrders, handleClosePopup, setLoader } =
-    useContext(ProductsContext);
+  const {
+    canceledOrders,
+    getOrders,
+    handleClosePopup,
+    setLoader,
+    handleOpenPopup,
+  } = useContext(ProductsContext);
 
-  const handelAcceptCancelation = (data) => {
+  const handleAcceptCancelation = (data) => {
     setLoader(true);
-    api
-      .changeOrderStatus({ _id: data._id, cancelAcceptance: true })
+    mainApi
+      .acceptCancelation(data)
       .then(() => {
         getOrders();
         handleClosePopup();
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        //console.log(err);
+        handleOpenPopup(<ErrorPopup error={err} />);
+      });
   };
 
   return (
@@ -37,7 +46,7 @@ function CanceledOrdersPopup() {
                   </div>
                   <div className="popup-canceled__order-info">
                     <div className="popup-canceled__order-number">
-                      Tu pedido # {order._id} fue cancelado
+                      Tu pedido # {order.orderNumber} fue cancelado
                     </div>
                     <div className="popup-canceled__motive">
                       motivo: {order.cancelMessage}
@@ -47,7 +56,7 @@ function CanceledOrdersPopup() {
                 <span
                   className="popup__user-enviado"
                   onClick={() => {
-                    handelAcceptCancelation({ _id: order._id });
+                    handleAcceptCancelation(order._id);
                   }}
                 >
                   Aceptar

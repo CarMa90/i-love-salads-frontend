@@ -4,11 +4,11 @@ import { useContext, useState } from "react";
 import { ProductsContext } from "../../../contexts/ProductsContext";
 import OrderDetailsPopup from "../OrderDetailsPopup/OrderDetailsPopup";
 import { validateRequiredText } from "../../../utils/formValidations";
-import { api } from "../../../utils/api";
+import { mainApi } from "../../../utils/MainApi";
 import ErrorPopup from "../ErrorPopup/ErrorPopup";
 
 function CancelOrderPopup({ order }) {
-  const { _id } = order;
+  const { orderNumber } = order;
 
   const { handleOpenPopup, handleClosePopup, getOrders, setLoader } =
     useContext(ProductsContext);
@@ -40,18 +40,17 @@ function CancelOrderPopup({ order }) {
 
     setLoader(true);
 
-    api
-      .changeOrderStatus({
+    mainApi
+      .cancelOrder({
         _id: order._id,
-        status: "Cancelado",
-        cancelMessage: message,
+        message: message,
       })
       .then(() => {
         getOrders();
         handleClosePopup();
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
         handleOpenPopup(<ErrorPopup error={err} />);
       })
       .finally(() => setLoader(false));
@@ -65,7 +64,7 @@ function CancelOrderPopup({ order }) {
         </div>
         <h3 className="popup-cancel__title">Cancelar Orden</h3>
         <p className="popup-cancel__text">
-          Por favor, indica el motivo de cancelación de la orden {_id}
+          Por favor, indica el motivo de cancelación de la orden {orderNumber}
         </p>
       </div>
       <form className="popup-cancel__form">

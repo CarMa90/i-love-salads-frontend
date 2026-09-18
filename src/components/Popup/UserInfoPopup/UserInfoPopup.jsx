@@ -6,15 +6,19 @@ import { ProductsContext } from "../../../contexts/ProductsContext";
 import { LogOut, Handbag } from "lucide-react";
 
 function UserInfoPopup() {
-  const { currentUser } = useContext(UserContext);
+  const { currentUser, handleLogOut } = useContext(UserContext);
   const { orders } = useContext(ProductsContext);
+
+  // console.log(orders);
 
   const pendingOrders = orders.filter(
     (order) =>
-      order.clientId === currentUser._id &&
+      order.client._id === currentUser._id &&
       order.status !== "Entregado" &&
       order.status !== "Cancelado",
   );
+
+  // console.log(pendingOrders);
 
   return (
     <>
@@ -23,6 +27,11 @@ function UserInfoPopup() {
         <h4 className="popup-user__subtitle">Pedidos en curso</h4>
         <ul className="popup__user-list">
           {pendingOrders.map((order) => {
+            const fecha = new Date(order.createdAt);
+            const hora = String(fecha.getHours()).padStart(2, "0");
+            const minutos = String(fecha.getMinutes()).padStart(2, "0");
+            const time = `${hora}:${minutos}`;
+
             return (
               order.status !== "Entregado" &&
               order.status !== "Cancelado" && (
@@ -33,10 +42,10 @@ function UserInfoPopup() {
                     </div>
                     <div className="popup__user-order-info">
                       <div className="popup__user-order-number">
-                        Pedido # {order._id}{" "}
+                        Pedido # {order.orderNumber}{" "}
                       </div>
                       <div className="popup__user-order-time">
-                        Realizado a las {order.time}
+                        Realizado a las {time}
                       </div>
                     </div>
                   </div>
@@ -53,11 +62,11 @@ function UserInfoPopup() {
           })}
         </ul>
       </div>
-      {/* <div className="popup__user-buttons">
-        <button className="popup__user-logout-btn">
+      <div className="popup__user-buttons">
+        <button className="popup__user-logout-btn" onClick={handleLogOut}>
           <LogOut /> <span>Cerrar sesión</span>
         </button>
-      </div> */}
+      </div>
     </>
   );
 }

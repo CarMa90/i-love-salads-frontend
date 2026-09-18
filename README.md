@@ -1,40 +1,49 @@
 # 🥗 I Love Salads - Frontend
 
-Plataforma moderna para realizar pedidos online de ensaladas, baguettes, sopas y bebidas. Incluye panel de administración para gestionar órdenes y un sistema completo de carrito de compras.
+Frontend de la aplicación de pedidos online para ensaladas, baguettes, sopas y bebidas. La app incluye un flujo completo de autenticación, carrito, gestión de órdenes y un panel de administración para roles de cliente, restaurante y administrador.
 
 ## 🌐 Proyecto desplegado
 
-- [Aplicación principal](https://CarMa90.github.io/i-love-salads-frontend)
-- [Backoffice](https://CarMa90.github.io/i-love-salads-frontend/backoffice)
+- [Aplicación principal](https://ilovesalads.heise.cl)
+- [Backoffice](https://ilovesalads.heise.cl/backoffice)
 
-## ✨ Características
+La interfaz está conectada a un backend remoto para manejar usuarios, sesiones, productos y órdenes.
 
-- 🛒 **Carrito de Compras**: Gestión intuitiva de productos seleccionados
-- 🎯 **Categorías de Productos**: Organización por tipos (Ensaladas, Baguettes, Sopas, Bebidas)
-- 📊 **Panel de Administración**: Interfaz para gestionar órdenes (backoffice)
-- ⚡ **Interfaz Responsiva**: Optimizada para dispositivos móviles y desktop
-- 🔔 **Notificaciones**: Popups informativos y de error
-- ⏳ **Indicador de Carga**: Feedback visual durante operaciones
+## ✨ Funcionalidades actuales
 
-## 🛠️ Tecnologías
+- 🛒 Carrito de compras con almacenamiento local
+- 🧾 Catálogo de productos por categorías
+- 🔐 Registro e inicio de sesión de clientes
+- 🏪 Registro de restaurantes con tipo de usuario `restaurant`
+- 🛡️ Rutas protegidas según rol (`client`, `admin`, `restaurant`)
+- 📊 Backoffice para visualizar y gestionar órdenes
+- 🧾 Vista de detalle y cancelación de pedidos
+- 🔔 Popups de error, éxito y mensajes informativos
+- ⏳ Indicador de carga durante peticiones
+- 📱 Diseño responsive para desktop y mobile
+- 🖨️ Soporte de impresión para documentación de pedidos
 
-- **React 18+** - Librería UI
-- **Vite** - Build tool y dev server
-- **React Router** - Enrutamiento
-- **ESLint** - Linting de código
-- **CSS3** - Estilos
+## 🛠️ Stack tecnológico
 
-## 📋 Requisitos Previos
+- React 19
+- Vite 8
+- React Router DOM 7
+- ESLint
+- CSS3 / estilos modulares por componente
+- Lucide React
+- React To Print
 
-- Node.js 16+
-- npm o yarn
+## 📋 Requisitos previos
 
-## 🚀 Instalación y Uso
+- Node.js 18+ (recomendado 20 LTS)
+- npm
+
+## 🚀 Instalación y uso
 
 ### 1. Clonar el repositorio
 
 ```bash
-git clone <url-repositorio>
+git clone <url-del-repositorio>
 cd i-love-salads-frontend
 ```
 
@@ -44,87 +53,126 @@ cd i-love-salads-frontend
 npm install
 ```
 
-### 3. Ejecutar en desarrollo
+### 3. Configurar variables de entorno
+
+Crea un archivo `.env` en la raíz del proyecto con la URL del backend:
+
+```bash
+VITE_API_URL=http://localhost:3000
+```
+
+Si usás un backend remoto, reemplazá la URL por la del servidor correspondiente.
+
+### 4. Ejecutar en desarrollo
 
 ```bash
 npm run dev
 ```
 
-La aplicación estará disponible en `http://localhost:5173`
+La app quedará disponible en:
 
-### 4. Build para producción
+```text
+http://localhost:5173
+```
+
+### 5. Build para producción
 
 ```bash
 npm run build
 ```
 
-### 5. Preview de producción
+### 6. Preview del build
 
 ```bash
 npm run preview
 ```
 
-## 📁 Estructura del Proyecto
-
-```
-src/
-├── components/          # Componentes React
-│   ├── App.jsx         # Componente principal
-│   ├── Header/         # Encabezado
-│   ├── Navigation/     # Navegación
-│   ├── ProductSection/ # Sección de productos
-│   ├── OrdersTable/    # Tabla de órdenes (backoffice)
-│   ├── Popup/          # Sistema de popups
-│   │   ├── CartPopup/
-│   │   ├── OrderDetailsPopup/
-│   │   ├── ErrorPopup/
-│   │   └── ...
-│   ├── Footer/         # Pie de página
-│   └── Loader/         # Indicador de carga
-├── contexts/           # Context API
-│   ├── ProductsContext.jsx
-│   └── UserContext.jsx
-├── utils/              # Utilidades
-│   ├── api.js         # Llamadas a API
-│   └── formValidations.js
-├── assets/            # Recursos estáticos
-└── vendor/            # Fuentes y normalización
-```
-
-## 🎯 Rutas
-
-- `/` - Página principal con catálogo de productos
-- `/backoffice` - Panel de administración de órdenes
-
-## 🔗 API
-
-La aplicación se conecta a una API backend para:
-
-- Obtener lista de órdenes
-- Crear nuevas órdenes
-- Actualizar estado de órdenes
-- Gestionar información de usuarios
-
-## 💡 Características Principales
-
-### Cliente
-
-- Explorar menú de productos
-- Agregar productos al carrito
-- Ver detalles de órdenes previas
-- Aceptar o cancelar órdenes
-
-### Administrador
-
-- Ver todas las órdenes
-- Cambiar estado de órdenes
-- Gestionar cancelaciones
-- Monitoreo de pedidos
-
-## 🐛 Linting
+### 7. Ejecutar lint
 
 ```bash
 npm run lint
 ```
 
-**Hecho con ❤️ para amantes de las ensaladas**
+### 8. Deploy a GitHub Pages
+
+```bash
+npm run deploy
+```
+
+## 🧭 Rutas principales
+
+- `/` - Catálogo principal para clientes
+- `/signin` - Inicio de sesión
+- `/signup` - Registro de cliente
+- `/restaurant/signup` - Registro de restaurante
+- `/backoffice` - Panel administrativo para `admin` y `restaurant`
+- `*` - Redirección a inicio
+
+## 🔐 Flujos de acceso
+
+### Cliente
+
+- Puede navegar por el catálogo
+- Agregar productos al carrito
+- Confirmar pedidos
+- Ver y gestionar sus órdenes
+
+### Administrador / Restaurante
+
+- Acceden al backoffice
+- Consultan órdenes
+- Actualizan estados de pedidos
+- Gestionan cancelaciones y seguimiento
+
+## 📁 Estructura del proyecto
+
+```text
+src/
+├── assets/                 # Imágenes y recursos estáticos
+├── components/             # Componentes de UI y vistas
+│   ├── App.jsx             # Enrutamiento principal y estado global
+│   ├── Header/             # Encabezados
+│   ├── Login/              # Login
+│   ├── Register/           # Registro de cliente
+│   ├── RestaurantRegister/
+│   ├── ProductSection/     # Catálogo y productos
+│   ├── OrdersTable/        # Gestión de pedidos
+│   ├── Popup/              # Modales y notificaciones
+│   ├── Footer/             # Footer
+│   ├── Loader/             # Loader
+│   └── ProtectedRoute/     # Protección de rutas
+├── constants/              # Datos constantes (categorías, productos)
+├── contexts/               # Context API
+│   ├── ProductsContext.jsx
+│   └── UserContext.jsx
+├── hooks/                  # Hooks reutilizables
+├── utils/                  # Utilidades de autenticación y helpers
+│   ├── auth.js
+│   ├── MainApi.js
+│   ├── token.js
+│   ├── cartItems.js
+│   └── formValidations.js
+├── vendor/                 # Fuentes y normalización
+├── index.css               # Estilos globales
+├── main.jsx                # Bootstrap de la app
+└── App.css                 # Estilos principales
+```
+
+## 🔗 API esperada
+
+La app consume endpoints del backend relacionados con:
+
+- `/signup`
+- `/signin`
+- `/users/me`
+- `/orders`
+
+El valor de `VITE_API_URL` debe apuntar al backend base para que todas estas rutas queden resueltas correctamente.
+
+## 🐛 Consideraciones
+
+- El proyecto usa `BrowserRouter` con `basename={import.meta.env.BASE_URL}` para compatibilidad con despliegues en GitHub Pages.
+- La lógica de acceso y redirecciones está centralizada en `App.jsx` y `ProtectedRoute.jsx`.
+- Los tokens se guardan en localStorage mediante `token.js`.
+
+**Hecho con ❤️ para amantes de las ensaladas.**

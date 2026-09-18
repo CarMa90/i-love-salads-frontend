@@ -7,12 +7,8 @@ function ErrorPopup({ error }) {
         <h3 className="popup__title">Algo salió mal</h3>
       </div>
       <div className="popup-error__content">
-        <div className="popup-error__message">{error}</div>
-        <p>
-          Lo sentimos, algo ha salido mal durante la solicitud. Es posible que
-          haya un problema de conexión o que el servidor no funcione. Por favor,
-          inténtalo más tarde
-        </p>
+        <div className="popup-error__message">Error:</div>
+        <p>{error.message}</p>
       </div>
     </>
   );
