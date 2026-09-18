@@ -1,26 +1,15 @@
 import "./RestaurantRegister.css";
-import { register, authorize } from "../../utils/auth";
 import { COUNTRIES } from "../../constants/index";
 import InfoTooltip from "../InfoTooltip/InfoTooltip";
 import { useContext } from "react";
 import { UserContext } from "../../contexts/UserContext";
 import { ProductsContext } from "../../contexts/ProductsContext";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useFormAndValidation } from "../../hooks/useFormAndValidations";
-import { setToken } from "../../utils/token";
-import { mainApi } from "../../utils/MainApi";
 
 function RestaurantRegister() {
-  const {
-    setIsOpen,
-    setSuccess,
-    setErrorMessage,
-    setIsLoggedIn,
-    setCurrentUser,
-  } = useContext(UserContext);
-  const { setLoader, getOrders } = useContext(ProductsContext);
-
-  const navigate = useNavigate();
+  const { handleRegister } = useContext(UserContext);
+  const { setLoader } = useContext(ProductsContext);
 
   const { values, handleChange, errors, isValid } = useFormAndValidation({
     email: "",
@@ -38,57 +27,8 @@ function RestaurantRegister() {
 
     setLoader(true);
 
-    try {
-      await register({ ...values, userType: "admin" });
-
-      const authRes = await authorize({
-        email: values.email,
-        password: values.password,
-      });
-      setToken(authRes.token);
-      setIsLoggedIn(true);
-
-      const userInfoRes = await mainApi.getUserInfo();
-      const userData = userInfoRes.data;
-      setCurrentUser(userData);
-
-      await getOrders();
-
-      if (userData.userType === "admin" || userData.userType === "restaurant") {
-        navigate("/backoffice");
-      } else if (userData.userType === "client") {
-        navigate("/");
-      }
-    } catch (err) {
-      setLoader(false);
-      setIsOpen(true);
-      setSuccess(false);
-      setErrorMessage(err.message || "Ocurrió un error durante el proceso");
-    }
+    handleRegister({ ...values, userType: "admin" });
   };
-
-  /*
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    if (!isValid) {
-      return;
-    }
-
-    // console.log(values);
-    register({ ...values, userType: "admin" })
-      .then(() => {
-        // console.log("registro exitoso");
-        setIsOpen(true);
-        setSuccess(true);
-      })
-      .catch((err) => {
-        setIsOpen(true);
-        setSuccess(false);
-        setErrorMessage(err.message);
-      });
-  };
-  */
 
   return (
     <>

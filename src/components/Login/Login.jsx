@@ -1,31 +1,20 @@
 import "./Login.css";
-import { Link, useNavigate } from "react-router-dom";
-import { authorize } from "../../utils/auth";
+import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { UserContext } from "../../contexts/UserContext";
 import { ProductsContext } from "../../contexts/ProductsContext";
 import InfoTooltip from "../InfoTooltip/InfoTooltip";
-import { setToken } from "../../utils/token";
-import { mainApi } from "../../utils/MainApi";
 import { useFormAndValidation } from "../../hooks/useFormAndValidations";
 
 function Login() {
-  const {
-    setIsOpen,
-    setSuccess,
-    setErrorMessage,
-    setIsLoggedIn,
-    setCurrentUser,
-  } = useContext(UserContext);
+  const { handleLogin } = useContext(UserContext);
 
-  const { getOrders, setLoader } = useContext(ProductsContext);
+  const { setLoader } = useContext(ProductsContext);
 
   const { values, handleChange, errors, isValid } = useFormAndValidation({
     email: "",
     password: "",
   });
-
-  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -34,29 +23,7 @@ function Login() {
 
     setLoader(true);
 
-    authorize(values)
-      .then(async (res) => {
-        setToken(res.token);
-        setIsLoggedIn(true);
-        const userInfoRes = await mainApi.getUserInfo();
-        const userData = userInfoRes.data;
-        setCurrentUser(userData);
-        if (
-          userData.userType === "admin" ||
-          userData.userType === "restaurant"
-        ) {
-          navigate("/backoffice");
-        } else if (userData.userType === "client") {
-          navigate("/");
-        }
-        getOrders();
-      })
-      .catch((err) => {
-        setLoader(false);
-        setIsOpen(true);
-        setSuccess(false);
-        setErrorMessage(err.message);
-      });
+    handleLogin(values);
   };
 
   return (

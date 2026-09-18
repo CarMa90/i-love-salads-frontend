@@ -40,7 +40,7 @@ export const authorize = ({ password, email }) => {
   });
 };
 
-export const tokenValidation = (token) => {
+export const validateToken = (token) => {
   return fetch(`${API_URL}/users/me`, {
     method: "GET",
     headers: {

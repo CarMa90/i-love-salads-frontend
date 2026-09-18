@@ -16,13 +16,14 @@ import ErrorPopup from "./Popup/ErrorPopup/ErrorPopup";
 import { GROUPS, PRODUCTS } from "../constants";
 import Register from "./Register/Register";
 import Login from "./Login/Login";
-import { getToken, removeToken } from "../utils/token";
-import { tokenValidation } from "../utils/auth";
+import { getToken, removeToken, setToken } from "../utils/token";
+import { validateToken } from "../utils/auth";
 import ProtectedRoute from "./ProtectedRoute/ProtectedRoute";
 import HeaderBackoffice from "./Header/HeaderBackoffice/HeaderBackoffice";
 import { mainApi } from "../utils/MainApi";
 import RestaurantRegister from "./RestaurantRegister/RestaurantRegister";
 import { getCartItems, setCartItemsToLocalStorage } from "../utils/cartItems";
+import { authorize, register } from "../utils/auth";
 
 function App() {
   const [popup, setPopup] = useState(null);
@@ -95,7 +96,7 @@ function App() {
       return;
     }
 
-    tokenValidation(jwt)
+    validateToken(jwt)
       .then((res) => {
         setIsLoggedIn(true);
         setCurrentUser(res.data);
@@ -126,6 +127,7 @@ function App() {
         // console.log(err);
         removeToken();
         setIsLoggedIn(false);
+        setLoader(false);
       });
   }, []);
 
@@ -136,7 +138,61 @@ function App() {
       !order.cancelAcceptance,
   );
 
-  // console.log(canceledOrders);
+  function handleLogin(values) {
+    authorize(values)
+      .then(async (res) => {
+        setToken(res.token);
+        setIsLoggedIn(true);
+        const userInfoRes = await mainApi.getUserInfo();
+        const userData = userInfoRes.data;
+        setCurrentUser(userData);
+        if (
+          userData.userType === "admin" ||
+          userData.userType === "restaurant"
+        ) {
+          navigate("/backoffice");
+        } else if (userData.userType === "client") {
+          navigate("/");
+        }
+        getOrders();
+      })
+      .catch((err) => {
+        setLoader(false);
+        setIsOpen(true);
+        setSuccess(false);
+        setErrorMessage(err.message);
+      });
+  }
+
+  async function handleRegister(values) {
+    try {
+      await register(values);
+
+      const authRes = await authorize({
+        email: values.email,
+        password: values.password,
+      });
+      setToken(authRes.token);
+      setIsLoggedIn(true);
+
+      const userInfoRes = await mainApi.getUserInfo();
+      const userData = userInfoRes.data;
+      setCurrentUser(userData);
+
+      await getOrders();
+
+      if (userData.userType === "admin" || userData.userType === "restaurant") {
+        navigate("/backoffice");
+      } else if (userData.userType === "client") {
+        navigate("/");
+      }
+    } catch (err) {
+      setLoader(false);
+      setIsOpen(true);
+      setSuccess(false);
+      setErrorMessage(err.message || "Ocurrió un error durante el proceso");
+    }
+  }
 
   return (
     <>
@@ -155,6 +211,8 @@ function App() {
           handleClosePopup,
           navigateToSignin,
           handleLogOut,
+          handleRegister,
+          handleLogin,
         }}
       >
         <ProductsContext.Provider

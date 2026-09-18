@@ -1,25 +1,15 @@
 import "./Register.css";
-import { authorize, register } from "../../utils/auth";
 import { COUNTRIES } from "../../constants/index";
 import InfoTooltip from "../InfoTooltip/InfoTooltip";
 import { useContext } from "react";
 import { UserContext } from "../../contexts/UserContext";
 import { ProductsContext } from "../../contexts/ProductsContext";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useFormAndValidation } from "../../hooks/useFormAndValidations";
-import { mainApi } from "../../utils/MainApi";
-import { setToken } from "../../utils/token";
 
 function Register() {
-  const navigate = useNavigate();
-  const {
-    setIsOpen,
-    setSuccess,
-    setErrorMessage,
-    setIsLoggedIn,
-    setCurrentUser,
-  } = useContext(UserContext);
-  const { getOrders, setLoader } = useContext(ProductsContext);
+  const { handleRegister } = useContext(UserContext);
+  const { setLoader } = useContext(ProductsContext);
 
   const { values, handleChange, errors, isValid } = useFormAndValidation({
     email: "",
@@ -37,33 +27,7 @@ function Register() {
 
     setLoader(true);
 
-    try {
-      await register(values);
-
-      const authRes = await authorize({
-        email: values.email,
-        password: values.password,
-      });
-      setToken(authRes.token);
-      setIsLoggedIn(true);
-
-      const userInfoRes = await mainApi.getUserInfo();
-      const userData = userInfoRes.data;
-      setCurrentUser(userData);
-
-      await getOrders();
-
-      if (userData.userType === "admin" || userData.userType === "restaurant") {
-        navigate("/backoffice");
-      } else if (userData.userType === "client") {
-        navigate("/");
-      }
-    } catch (err) {
-      setLoader(false);
-      setIsOpen(true);
-      setSuccess(false);
-      setErrorMessage(err.message || "Ocurrió un error durante el proceso");
-    }
+    handleRegister(values);
   };
 
   return (

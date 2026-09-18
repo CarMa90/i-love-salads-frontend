@@ -17,7 +17,7 @@ function CanceledOrdersPopup() {
     handleOpenPopup,
   } = useContext(ProductsContext);
 
-  const handelAcceptCancelation = (data) => {
+  const handleAcceptCancelation = (data) => {
     setLoader(true);
     mainApi
       .acceptCancelation(data)
@@ -56,7 +56,7 @@ function CanceledOrdersPopup() {
                 <span
                   className="popup__user-enviado"
                   onClick={() => {
-                    handelAcceptCancelation(order._id);
+                    handleAcceptCancelation(order._id);
                   }}
                 >
                   Aceptar
