@@ -99,13 +99,26 @@ function App() {
       .then((res) => {
         setIsLoggedIn(true);
         setCurrentUser(res.data);
+
+        const currentPath = location.pathname;
+
+        const isAuthRoute = [
+          "/signin",
+          "/signup",
+          "/restaurant/signup",
+        ].includes(currentPath);
+
         if (
           res.data.userType === "admin" ||
           res.data.userType === "restaurant"
         ) {
-          navigate("/backoffice");
+          if (isAuthRoute || currentPath === "/") {
+            navigate("/backoffice", { replace: true });
+          }
         } else if (res.data.userType === "client") {
-          navigate("/");
+          if (isAuthRoute) {
+            navigate("/", { replace: true });
+          }
         }
         getOrders();
       })
