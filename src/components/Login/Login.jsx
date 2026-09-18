@@ -18,7 +18,7 @@ function Login() {
     setCurrentUser,
   } = useContext(UserContext);
 
-  const { getOrders } = useContext(ProductsContext);
+  const { getOrders, setLoader } = useContext(ProductsContext);
 
   const { values, handleChange, errors, isValid } = useFormAndValidation({
     email: "",
@@ -31,6 +31,8 @@ function Login() {
     e.preventDefault();
 
     if (!isValid) return;
+
+    setLoader(true);
 
     authorize(values)
       .then(async (res) => {
@@ -50,6 +52,7 @@ function Login() {
         getOrders();
       })
       .catch((err) => {
+        setLoader(false);
         setIsOpen(true);
         setSuccess(false);
         setErrorMessage(err.message);
