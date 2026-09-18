@@ -20,6 +20,7 @@ function CartPopup() {
   const { isLoggedIn, navigateToSignin } = useContext(UserContext);
 
   function handleNavigateToSignin() {
+    handleClosePopup();
     navigateToSignin();
   }
 
